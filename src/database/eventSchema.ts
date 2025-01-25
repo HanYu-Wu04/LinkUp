@@ -16,14 +16,12 @@ interface IEvent extends Document {
   hobby: string;
   owner: Schema.Types.ObjectId; // Reference to User model
   participants: Schema.Types.ObjectId[]; // List of User references
+  attendees: Schema.Types.ObjectId[];
   startingParticipants: number;
   capacity: number;
   date: Date;
   location: { type: string; coordinates: [number, number] };
   imageUrl?: string;
-  categories?: string[];
-  organizer?: string;
-  attendees?: number;
 }
 
 const EventSchema = new Schema<IEvent>({
@@ -47,9 +45,7 @@ const EventSchema = new Schema<IEvent>({
     },
   },
   imageUrl: { type: String },
-  categories: { type: [String] },
-  organizer: { type: String },
-  attendees: { type: Number },
+  attendees: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 // Model: Checks if the Event model already exists, otherwise creates it

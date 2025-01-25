@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [recommendedEvents, setRecommendedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const session = useSession();
+  const { update, status, data } = useSession();
 
   useEffect(() => {
     const fetchEvents = async () => {

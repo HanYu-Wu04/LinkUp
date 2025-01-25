@@ -1,8 +1,16 @@
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
+
 
 # Establishing MongoDB connection
-client = MongoClient(os.getenv("MONGO_URI"))
+# Utilize dotenv from python-dotenv
+
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+if not MONGO_URI:
+    raise ValueError("MONGO_URI is not defined in the environment variables")
+client = MongoClient(MONGO_URI)
 
 db = client['test']
 collection = db['users']

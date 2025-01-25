@@ -1,12 +1,11 @@
 import os
 from pymongo import MongoClient
 
-client = MongoClient(
-    os.getenv("MONGO_URI")
-)
 
 # Pull MongoDB URI from environment variables
 MONGO_URI = os.getenv("MONGO_URI")
+client = MongoClient( MONGO_URI)
+print(MONGO_URI)
 DATABASE_NAME = "test"
 COLLECTION_NAME = "events"
 

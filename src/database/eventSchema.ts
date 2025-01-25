@@ -1,5 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+// TODO: add radius for location. This will be used to search for events within a certain radius
+
+/**
+ * Example POINT
+  const denver = { type: 'Point', coordinates: [-104.9903, 39.7392] };
+    return City.create({ name: 'Denver', location: denver }).
+    then(() => City.findOne().where('location').within(colorado)).
+  then(doc => assert.equal(doc.name, 'Denver'));
+ */
 // Event Schema Interface for TypeScript
 interface IEvent extends Document {
   name: string;

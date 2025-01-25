@@ -10,6 +10,8 @@ const UserSchema = new Schema({
   events: [{ type: Schema.Types.ObjectId, ref: "Event" }],
   // Friends will be a list of User schema
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  // list of hobbies
+  hobbies: [{ type: String, required: true }],
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

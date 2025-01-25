@@ -6,7 +6,7 @@ import Link from "next/link"; // Use next/link for navigation
 import Home from "./app/page"; // Adjust the path for Next.js pages
 import Login from "./app/login/page";
 import Signup from "./app/signup/page";
-import Dashboard from "./app/dashboard/page";
+import Dashboard from "./app/(home)/dashboard/page";
 
 const queryClient = new QueryClient();
 

@@ -5,17 +5,16 @@ interface IEvent extends Document {
   name: string;
   description: string;
   hobby: string;
-  owner: mongoose.Types.ObjectId; // Reference to User model
-  participants: mongoose.Types.ObjectId[]; // List of User references
+  owner: Schema.Types.ObjectId; // Reference to User model
+  participants: Schema.Types.ObjectId[]; // List of User references
   startingParticipants: number;
   capacity: number;
   date: Date;
-  location: string;
+  location: Object;
   imageUrl?: string;
   categories?: string[];
   organizer?: string;
   attendees?: number;
-  isRecommended?: boolean;
 }
 
 const EventSchema = new Schema<IEvent>({
@@ -27,12 +26,21 @@ const EventSchema = new Schema<IEvent>({
   startingParticipants: { type: Number, required: true },
   capacity: { type: Number, required: true },
   date: { type: Date, required: true },
-  location: { type: String, required: true },
+  location: {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ["Point"], // 'location.type' must be 'Point'
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
   imageUrl: { type: String },
   categories: { type: [String] },
   organizer: { type: String },
   attendees: { type: Number },
-  isRecommended: { type: Boolean, default: false }, // Default to false
 });
 
 // Model: Checks if the Event model already exists, otherwise creates it

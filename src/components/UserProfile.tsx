@@ -53,16 +53,12 @@ export default function UserProfile() {
           </div>
           <div className={styles.formFields}>
             <div>
-              <div className={styles.fieldTitle}>Email Address</div>
-              <div className={styles.fieldValue}>{userData.email}</div>
-            </div>
-            <div>
               <div className={styles.fieldTitle}>First Name</div>
-              <div className={styles.fieldValue}>{userData.firstName}</div>
+              <div className={styles.fieldValue}>{data?.firstName}</div>
             </div>
             <div>
               <div className={styles.fieldTitle}>Last Name</div>
-              <div className={styles.fieldValue}>{userData.lastName}</div>
+              <div className={styles.fieldValue}>{data?.lastName}</div>
             </div>
             <div>
               <div className={styles.fieldTitle}>Phone Number</div>

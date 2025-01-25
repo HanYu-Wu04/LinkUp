@@ -48,7 +48,7 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="animate-slide-in fixed left-0 top-0 h-screen w-64 border-r bg-white p-6">
+    <div className="animate-slide-in h-screen w-64 border-r bg-white p-6">
       <div className="mb-8 flex items-center space-x-3">
         <Image
           src={userData.profileImage}

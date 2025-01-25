@@ -1,5 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+// TODO: add radius for location. This will be used to search for events within a certain radius
+
+/**
+ * Example POINT
+  const denver = { type: 'Point', coordinates: [-104.9903, 39.7392] };
+    return City.create({ name: 'Denver', location: denver }).
+    then(() => City.findOne().where('location').within(colorado)).
+  then(doc => assert.equal(doc.name, 'Denver'));
+ */
 // Event Schema Interface for TypeScript
 interface IEvent extends Document {
   name: string;
@@ -7,14 +16,12 @@ interface IEvent extends Document {
   hobby: string;
   owner: Schema.Types.ObjectId; // Reference to User model
   participants: Schema.Types.ObjectId[]; // List of User references
+  attendees: Schema.Types.ObjectId[];
   startingParticipants: number;
   capacity: number;
   date: Date;
   location: { type: string; coordinates: [number, number] };
   imageUrl?: string;
-  categories?: string[];
-  organizer?: string;
-  attendees?: number;
 }
 
 const EventSchema = new Schema<IEvent>({
@@ -38,9 +45,7 @@ const EventSchema = new Schema<IEvent>({
     },
   },
   imageUrl: { type: String },
-  categories: { type: [String] },
-  organizer: { type: String },
-  attendees: { type: Number },
+  attendees: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 // Model: Checks if the Event model already exists, otherwise creates it

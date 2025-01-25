@@ -10,7 +10,7 @@ import mongoose, { Schema, Document } from "mongoose";
   then(doc => assert.equal(doc.name, 'Denver'));
  */
 // Event Schema Interface for TypeScript
-interface IEvent extends Document {
+export interface IEvent extends Document {
   name: string;
   description: string;
   hobby: string;

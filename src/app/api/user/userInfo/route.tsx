@@ -1,51 +1,45 @@
 import { prisma } from "@/app/db";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
-  const reqEmail = searchParams.get("reqEmail");
-  const session = await auth();
-
-  if (!reqEmail) {
-    return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
-  }
-
-  if (session.user.email !== reqEmail) {
-    return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
-  }
-
   try {
+    const { searchParams } = new URL(request.url);
+    const reqPhoneNumber = searchParams.get("reqPhoneNumber");
+
+    if (!reqPhoneNumber) {
+      return NextResponse.json({ success: false, message: "Phone number is required" }, { status: 400 });
+    }
+
+    const session = await auth();
+
+    if (!session || !session.user) {
+      return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
+    }
+
+    // Additional check to ensure the session phone number matches the requested phone number
+    if (session.user.phoneNumber !== reqPhoneNumber) {
+      return NextResponse.json({ success: false, message: "Unauthorized access" }, { status: 403 });
+    }
+
     const user = await prisma.user.findUnique({
-      where: {
-        email: reqEmail,
-      },
+      where: { phoneNumber: reqPhoneNumber },
       select: {
-        id: true,
-        userName: true,
-        bio: true,
-        posts: true,
-        friends: {
-          select: {
-            id: true,
-          },
-        },
-        email: true,
-        name: true,
-        Categories: true,
+        firstName: true,
+        lastName: true,
+        phoneNumber: true,
+        profileImage: true,
       },
     });
 
-    return NextResponse.json(user, { status: 200 });
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientValidationError) {
-      console.error("Validation error:", error.message);
-      return NextResponse.json({ error: "Validation error", details: error.message }, { status: 400 });
+    if (!user) {
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
-    console.error("Server error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    console.error("Error in user info route:", error);
+
+    return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
   }
 }

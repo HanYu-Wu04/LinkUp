@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { Image } from "@chakra-ui/react";
-import { Box, Button, Flex, FormControl, FormLabel, FormErrorMessage, Input, Text, Link } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { useState } from "react";
+import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 // Define Zod schema
 const signInSchema = z.object({
@@ -21,24 +22,24 @@ const signInSchema = z.object({
   apiError: z.string().optional(),
 });
 
-type SignUpFormData = z.infer<typeof signInSchema>;
+type SignInFormData = z.infer<typeof signInSchema>;
 
-export default function Login() {
-  const [isLoaded, setIsLoaded] = useState(false);
+const Login = () => {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<SignUpFormData>({
+  } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
   });
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSignIn = async (data: SignUpFormData) => {
+  const handleSignIn = async (data: SignInFormData) => {
+    setIsSubmitting(true);
+
     const response = await fetch("/api/user/signin", {
       method: "POST",
       headers: {
@@ -46,14 +47,17 @@ export default function Login() {
       },
       body: JSON.stringify(data),
     });
+
     if (!response.ok) {
-      response.json().then((data) => {
-        setError("apiError", { type: "manual", message: data.error });
-      });
+      const errorData = await response.json();
+      setError("apiError", { type: "manual", message: errorData.error });
+      toast({ title: "Error", description: errorData.error, variant: "destructive" });
+      setIsSubmitting(false);
     } else {
+      toast({ title: "Welcome Back!", description: "Redirecting to dashboard..." });
       await signIn("credentials", {
         redirect: true,
-        redirectTo: "/home",
+        redirectTo: "/dashboard",
         phoneNumber: data.phoneNumber,
         password: data.password,
       });
@@ -61,102 +65,61 @@ export default function Login() {
   };
 
   return (
-    <Flex
-      align="center"
-      justify="center"
-      minH="100vh"
-      position="relative"
-      style={{
-        background:
-          "url('https://images.pexels.com/photos/19727169/pexels-photo-19727169/free-photo-of-a-view-of-a-snowy-mountain-range-with-a-ski-slope.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') center/cover no-repeat fixed",
-      }}
-    >
-      <Box
-        bg="white"
-        p={8}
-        rounded="lg"
-        shadow="2xl"
-        width="full"
-        maxW="md"
-        position="relative"
-        backgroundColor="rgba(255, 255, 255, 0.95)"
-      >
-        <Flex direction="column" align="center" mb={6}>
-          {isLoaded && (
-            <Image
-              src="/assets/Aery.jpg"
-              alt="Logo"
-              boxSize="200px"
-              onError={(e) => console.error("Image failed to load:", e)}
-              onLoad={() => console.log("Image loaded successfully")}
-            />
-          )}
-        </Flex>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white to-gray-50 p-6">
+      <div className="w-full max-w-md space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold">Welcome Back</h2>
+          <p className="mt-2 text-muted-foreground">Sign in to your account to continue</p>
+        </div>
 
-        <form onSubmit={handleSubmit(handleSignIn)}>
-          <FormControl isInvalid={!!errors.phoneNumber} mb={4}>
-            <FormLabel color="blue.700">Phone Number</FormLabel>
+        <form onSubmit={handleSubmit(handleSignIn)} className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium" htmlFor="phoneNumber">
+              Phone Number
+            </label>
             <Input
+              id="phoneNumber"
               type="tel"
               {...register("phoneNumber")}
               placeholder="Enter your phone number"
               maxLength={10}
-              focusBorderColor="blue.400"
-              borderColor="blue.200"
+              required
+              className="w-full"
             />
-            <FormErrorMessage>{errors.phoneNumber?.message}</FormErrorMessage>
-          </FormControl>
+            {errors.phoneNumber && <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>}
+          </div>
 
-          <FormControl isInvalid={!!errors.password} mb={4}>
-            <FormLabel color="blue.700">Password</FormLabel>
+          <div className="space-y-2">
+            <label className="text-sm font-medium" htmlFor="password">
+              Password
+            </label>
             <Input
+              id="password"
               type="password"
               {...register("password")}
               placeholder="Enter your password"
-              focusBorderColor="blue.400"
-              borderColor="blue.200"
+              required
+              className="w-full"
             />
-            <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
-          </FormControl>
+            {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+          </div>
 
-          {errors.apiError && (
-            <Text color="red.500" fontSize="sm" mt={1}>
-              {errors.apiError.message}
-            </Text>
-          )}
+          {errors.apiError && <p className="text-sm text-red-500">{errors.apiError.message}</p>}
 
-          <Link
-            as={NextLink}
-            href="/forgotpass"
-            color="blue.500"
-            fontSize="sm"
-            display="block"
-            textAlign="right"
-            mt={2}
-          >
-            Forgot Password?
-          </Link>
-
-          <Button
-            type="submit"
-            bg="blue.400"
-            width="full"
-            mt={4}
-            color="white"
-            _hover={{ bg: "blue.500" }}
-            _active={{ bg: "blue.600" }}
-          >
-            Sign In
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Signing In..." : "Sign In"}
           </Button>
-
-          <Text textAlign="center" mt={4} color="gray.600">
-            Don&apos;t have an account?{" "}
-            <Link as={NextLink} href="/signup" color="blue.500">
-              Sign Up
-            </Link>
-          </Text>
         </form>
-      </Box>
-    </Flex>
+
+        <p className="text-center text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="text-primary hover:underline">
+            Sign up
+          </Link>
+        </p>
+      </div>
+    </div>
   );
-}
+};
+
+export default Login;

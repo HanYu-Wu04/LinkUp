@@ -13,10 +13,10 @@ const valid_paths = [
   "/assets",
 ];
 
-export default auth((req) => {
+export default auth((req, ctx) => {
   // First check if it's a static asset path
   if (req.nextUrl.pathname.startsWith("/assets/")) {
-    return null; // Allow access to assets without authentication
+    return undefined; // Allow access to assets without authentication
   }
 
   // Then check authentication for other paths

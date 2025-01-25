@@ -17,12 +17,10 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { colors } from "@/styles/colors";
 import { signIn } from "@/auth";
 
 // Define Zod schema
 const signUpSchema = z.object({
-  // Phone number must be valid
   phoneNumber: z.string().regex(/^\d{10}$/, "Phone number must be 10 digits"),
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -49,12 +47,9 @@ export default function Signup() {
   const router = useRouter();
 
   const handleSignUp = async (data: SignUpFormData) => {
-    // Check if user exists in db
     const res = await fetch("/api/user/test", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phoneNumber: data.phoneNumber }),
     });
     if (!res.ok) {
@@ -64,107 +59,60 @@ export default function Signup() {
     const { isUser } = await res.json();
     if (isUser) {
       setError("apiError", { type: "manual", message: "User already exists." });
-      console.log("User already exists.");
       return;
     }
-    if (typeof window !== "undefined") {
-      localStorage.setItem("phoneNumber", data.phoneNumber);
-      localStorage.setItem("password", data.password);
-      router.push("/home");
-    }
+    localStorage.setItem("phoneNumber", data.phoneNumber);
+    localStorage.setItem("password", data.password);
+    router.push("/login");
+
     const response = await fetch("/api/user/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    console.log("response for signup", response);
+
     if (!response.ok) {
-      response.json().then((data) => {
-        setError("apiError", { type: "manual", message: data.error });
-      });
+      const data = await response.json();
+      setError("apiError", { type: "manual", message: data.error });
       return;
-    } else {
-      // Automatically sign in the user after successful sign-up
-      await signIn("credentials", {
-        redirect: true, // Prevents automatic redirect
-        redirectTo: "/home",
-        phoneNumber: data.phoneNumber,
-        password: data.password,
-      });
     }
-    const user = await response.json();
-    console.log("Signed up user:", user);
+
+    await signIn("credentials", {
+      redirect: true,
+      redirectTo: "/",
+      phoneNumber: data.phoneNumber,
+      password: data.password,
+    });
   };
 
   return (
-    <Flex
-      align="center"
-      justify="center"
-      minH="100vh"
-      position="relative"
-      style={{ backgroundColor: colors.darkMode.background }} // Modern dark theme color
-    >
-      <Box
-        bg="white"
-        p={8}
-        rounded="lg"
-        shadow="2xl"
-        width="full"
-        maxW="md"
-        position="relative"
-        borderColor="black"
-        backgroundColor="rgba(255, 255, 255, 0.9)"
-      >
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white to-gray-50 p-6">
+      <Box bg="white" p={8} rounded="lg" shadow="2xl" width="full" maxW="md" border="1px solid" borderColor="gray.200">
         <Heading as="h1" size="lg" textAlign="center" mb={6}>
-          Sign Up:
+          Create an Account
         </Heading>
+        <Text textAlign="center" mb={4} color="gray.600">
+          Join our community and start discovering events
+        </Text>
         <form onSubmit={handleSubmit(handleSignUp)}>
           <FormControl isInvalid={!!errors.firstName} mb={4}>
             <FormLabel>First Name</FormLabel>
-            <Input
-              type="text"
-              {...register("firstName")}
-              placeholder="Enter your first name"
-              borderColor="grey"
-              focusBorderColor="black"
-            />
+            <Input type="text" {...register("firstName")} placeholder="Enter your first name" />
             <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={!!errors.lastName} mb={4}>
             <FormLabel>Last Name</FormLabel>
-            <Input
-              type="text"
-              {...register("lastName")}
-              placeholder="Enter your last name"
-              borderColor="grey"
-              focusBorderColor="black"
-            />
+            <Input type="text" {...register("lastName")} placeholder="Enter your last name" />
             <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={!!errors.phoneNumber} mb={4}>
             <FormLabel>Phone Number</FormLabel>
-            <Input
-              type="tel"
-              {...register("phoneNumber")}
-              placeholder="111-111-1111"
-              maxLength={10}
-              borderColor="grey"
-              focusBorderColor="black"
-            />
+            <Input type="tel" {...register("phoneNumber")} placeholder="111-111-1111" maxLength={10} />
             <FormErrorMessage>{errors.phoneNumber?.message}</FormErrorMessage>
           </FormControl>
-
           <FormControl isInvalid={!!errors.password} mb={4}>
             <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              {...register("password")}
-              borderColor="grey"
-              placeholder="Enter your password"
-              focusBorderColor="black"
-            />
+            <Input type="password" {...register("password")} placeholder="Enter your password" />
             <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
           </FormControl>
 
@@ -176,15 +124,14 @@ export default function Signup() {
           <Button type="submit" colorScheme="blue" width="full" mt={4}>
             Sign Up
           </Button>
-
-          <Text textAlign="center" mt={4}>
-            Already have an account?{" "}
-            <Link as={NextLink} href="/login" color="blue.500">
-              Log In
-            </Link>
-          </Text>
         </form>
+        <Text textAlign="center" mt={4} color="gray.600">
+          Already have an account?{" "}
+          <Link as={NextLink} href="/login" color="blue.500" textDecoration="underline">
+            Log In
+          </Link>
+        </Text>
       </Box>
-    </Flex>
+    </div>
   );
 }

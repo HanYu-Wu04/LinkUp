@@ -1,13 +1,45 @@
-"use client";
-import { usePathname } from "next/navigation"; // Use usePathname from next/navigation
+import { usePathname } from "next/navigation";
 import { Home, MessageSquare, User } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import DarkModeToggle from "./DarkModeToggle";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export const Sidebar = () => {
-  const pathname = usePathname(); // Get the current path from the router
+  const pathname = usePathname();
+  const [userData, setUserData] = useState({
+    name: "Loading...",
+    phoneNumber: "Loading...",
+    profileImage:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80", // Default profile picture
+  });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const phoneNumber = "user-phone-number"; // You can get this dynamically from session or context
+
+        const response = await fetch(`/api/user/userInfo/route.ts?reqPhoneNumber=${phoneNumber}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+
+        setUserData({
+          name: `${data.firstName} ${data.lastName}`,
+          phoneNumber: data.phoneNumber || "No Phone Number Provided",
+          profileImage: data.profileImage || "defaultImageURL", // Adjust as needed
+        });
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const links = [
     { icon: User, label: "View Profile", path: "/profile" },
     { icon: Home, label: "Home", path: "/dashboard" },
@@ -18,15 +50,15 @@ export const Sidebar = () => {
     <div className="animate-slide-in fixed left-0 top-0 h-screen w-64 border-r bg-white p-6">
       <div className="mb-8 flex items-center space-x-3">
         <Image
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt="Profile"
-          width={48} // Width of the image in pixels
-          height={48} // Height of the image in pixels
+          src={userData.profileImage}
+          alt={`${userData.name}'s Profile`}
+          width={48}
+          height={48}
           className="h-12 w-12 rounded-full object-cover"
         />
         <div>
-          <h3 className="font-semibold">John Doe</h3>
-          <p className="text-sm text-muted-foreground">john@example.com</p>
+          <h3 className="font-semibold">{userData.name}</h3>
+          <p className="text-sm text-muted-foreground">{userData.phoneNumber}</p>
         </div>
       </div>
       <nav className="space-y-2">
@@ -36,9 +68,7 @@ export const Sidebar = () => {
             href={link.path}
             className={cn(
               "flex items-center space-x-3 px-4 py-2 rounded-lg transition-colors",
-              pathname === link.path
-                ? "bg-secondary text-primary" // Active link styles
-                : "hover:bg-secondary/50 text-muted-foreground",
+              pathname === link.path ? "bg-secondary text-primary" : "hover:bg-secondary/50 text-muted-foreground",
             )}
           >
             <link.icon className="h-5 w-5" />
@@ -47,8 +77,6 @@ export const Sidebar = () => {
         ))}
       </nav>
       <div className="mt-auto">
-        {" "}
-        {/* Place the dark mode toggle at the bottom */}
         <DarkModeToggle />
       </div>
     </div>

@@ -1,44 +1,68 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+"use client";
 
-export default function Page() {
+import { Sidebar } from "@/components/Sidebar";
+import { EventCard } from "@/components/EventCard";
+
+const Dashboard = () => {
+  const yourEvents = [
+    {
+      title: "Tech Conference 2024",
+      date: "March 15, 2024",
+      description: "Join us for the biggest tech conference of the year.",
+      isRegistered: true,
+    },
+    {
+      title: "Design Workshop",
+      date: "March 20, 2024",
+      description: "Learn the latest design trends and techniques.",
+      isRegistered: true,
+    },
+  ];
+
+  const recommendedEvents = [
+    {
+      title: "AI Summit",
+      date: "April 5, 2024",
+      description: "Explore the future of artificial intelligence.",
+    },
+    {
+      title: "Startup Networking",
+      date: "April 10, 2024",
+      description: "Connect with founders and investors.",
+    },
+    {
+      title: "Web Development Bootcamp",
+      date: "April 15, 2024",
+      description: "Intensive training on modern web development.",
+    },
+  ];
+
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar />
+      <main className="ml-64 p-8">
+        <div className="mx-auto max-w-5xl space-y-12">
+          <section className="space-y-6">
+            <h2 className="text-3xl font-bold">Your Events</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {yourEvents.map((event, index) => (
+                <EventCard key={index} {...event} />
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-6">
+            <h2 className="text-3xl font-bold">AI Recommended Events</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {recommendedEvents.map((event, index) => (
+                <EventCard key={index} {...event} />
+              ))}
+            </div>
+          </section>
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </main>
+    </div>
   );
-}
+};
+
+export default Dashboard;

@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer base {
+  /* Dark mode styles */
+  .dark {
+    --background: 0 0% 10%; /* Dark background */
+    --foreground: 240 10% 95%; /* Light text color */
+    --card: 0 0% 20%; /* Dark card */
+    --card-foreground: 240 10% 95%; /* Light text on card */
+    --popover: 0 0% 20%; /* Dark popover */
+    --popover-foreground: 240 10% 95%; /* Light popover text */
+    --primary: 240 10% 80%; /* Lighter primary */
+    --primary-foreground: 0 0% 10%; /* Dark primary text */
+    --secondary: 240 6% 30%; /* Slightly darker secondary */
+    --secondary-foreground: 240 5.9% 90%; /* Light text for secondary */
+    --muted: 240 6% 25%; /* Muted colors */
+    --muted-foreground: 240 6% 80%; /* Muted text color */
+    --accent: 240 6% 25%; /* Accent color */
+    --accent-foreground: 240 6% 80%; /* Accent text */
+    --destructive: 0 60% 40%; /* Destructive colors */
+    --destructive-foreground: 0 0% 98%; /* Destructive text */
+    --border: 240 5.9% 40%; /* Darker borders */
+    --input: 240 5.9% 40%; /* Dark input */
+    --ring: 240 5.9% 30%; /* Dark ring color */
+  }
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
+}
+
+.glass-card.dark {
+  @apply bg-black/80 backdrop-blur-sm border border-black/20 shadow-lg; /* Dark mode for card */
+}
+
+.nav-link {
+  @apply relative px-4 py-2 text-sm font-medium transition-colors hover:text-primary;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.button-hover {
+  @apply transition-all duration-300 hover:scale-105;
+}
+
+/* Dark mode support for nav-link */
+.nav-link.dark:hover::after {
+  @apply bg-primary/70;
+}

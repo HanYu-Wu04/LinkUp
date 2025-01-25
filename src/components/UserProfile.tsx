@@ -54,11 +54,11 @@ export default function UserProfile() {
           <div className={styles.formFields}>
             <div>
               <div className={styles.fieldTitle}>First Name</div>
-              <div className={styles.fieldValue}>{data?.firstName}</div>
+              <div className={styles.fieldValue}>{localStorage.getItem("firstName")}</div>
             </div>
             <div>
               <div className={styles.fieldTitle}>Last Name</div>
-              <div className={styles.fieldValue}>{data?.lastName}</div>
+              <div className={styles.fieldValue}>{localStorage.getItem("lastName")}</div>
             </div>
             <div>
               <div className={styles.fieldTitle}>Phone Number</div>

@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Link from "next/link"; // Use next/link for navigation
-import Home from "./app/page"; // Adjust the path for Next.js pages
+import Home from "./app/(landing)/page"; // Adjust the path for Next.js pages
 import Login from "./app/login/page";
 import Signup from "./app/signup/page";
 import Dashboard from "./app/(home)/dashboard/page";

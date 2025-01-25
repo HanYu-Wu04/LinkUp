@@ -4,12 +4,14 @@ import { Sidebar } from "@/components/Sidebar";
 import { EventCard } from "@/components/EventCard";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
   const [yourEvents, setYourEvents] = useState([]);
   const [recommendedEvents, setRecommendedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const { update, status, data } = useSession();
 
   useEffect(() => {
     const fetchEvents = async () => {

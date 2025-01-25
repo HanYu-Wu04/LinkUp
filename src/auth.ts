@@ -11,11 +11,15 @@ export const signInSchema = z.object({
 declare module "next-auth" {
   interface Session extends DefaultSession {
     phoneNumber?: string;
+    firstName?: string;
+    lastName?: string;
   }
 }
 
 interface ExtendedUser extends User {
   phoneNumber: string; // Add custom property
+  firstName: string;
+  lastName: string;
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -58,6 +62,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Extend token with username
       if (user) {
         token.phoneNumber = (user as ExtendedUser).phoneNumber;
+        token.firstName = (user as ExtendedUser).firstName;
+        token.lastName = (user as ExtendedUser).lastName;
       }
       return token;
     },

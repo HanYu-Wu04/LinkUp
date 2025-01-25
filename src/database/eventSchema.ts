@@ -10,7 +10,7 @@ interface IEvent extends Document {
   startingParticipants: number;
   capacity: number;
   date: Date;
-  location: Object;
+  location: { type: string; coordinates: [number, number] };
   imageUrl?: string;
   categories?: string[];
   organizer?: string;

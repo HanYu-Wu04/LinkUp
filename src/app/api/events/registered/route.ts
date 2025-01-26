@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/database/db";
-import Event from "@/database/eventSchema";
 import { auth } from "@/auth";
-import User from "@/database/userSchema";
+import { User } from "@/database/index";
 
 export async function GET() {
   await connectDB();

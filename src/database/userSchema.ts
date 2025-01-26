@@ -18,8 +18,8 @@ const UserSchema = new Schema<IUser>({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   password: { type: String, required: true },
-  events: [{ type: Schema.Types.ObjectId, ref: "event" }], // Reference to Event model
-  friends: [{ type: Schema.Types.ObjectId, ref: "user" }], // Reference to User model
+  events: [{ type: Schema.Types.ObjectId, ref: "Event" }], // Reference to Event model
+  friends: [{ type: Schema.Types.ObjectId, ref: "User" }], // Reference to User model
   hobbies: [{ type: String, required: true }], // List of hobbies
 });
 

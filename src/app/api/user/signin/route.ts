@@ -1,7 +1,7 @@
 import connectDB from "@/database/db";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import userSchema from "@/database/userSchema";
+import { User } from "@/database/index";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid input." }, { status: 400 });
     }
 
-    const user = await userSchema.findOne({ phoneNumber }, "id phoneNumber firstName lastName password");
+    const user = await User.findOne({ phoneNumber }, "id phoneNumber firstName lastName password");
 
     if (!user) {
       return NextResponse.json({ error: "User not found." }, { status: 400 });

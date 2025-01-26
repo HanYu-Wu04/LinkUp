@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/database/db";
-import Event from "@/database/eventSchema";
+import { Event } from "@/database/index";
 import { auth } from "@/auth";
 
 export async function GET() {
@@ -16,6 +16,7 @@ export async function GET() {
   console.log(currentDate);
   // TODO: fix to utilize mongoodb queries
   const allEvents = await Event.find({});
+  console.log("All events", allEvents);
   const events = allEvents.filter(
     (event) => event.date >= currentDate && !event.participants.includes(session.objectId),
   );

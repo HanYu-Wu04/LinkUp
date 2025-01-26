@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/database/db";
-import Event from "@/database/eventSchema";
+import { Event } from "@/database/index";
 import mongoose from "mongoose";
 
 export async function GET() {

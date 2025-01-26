@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
-import Event from "@/database/eventSchema";
-import User from "@/database/userSchema";
+import { Event } from "@/database/index";
+import { User } from "@/database/index";
 
 const mongoURI = process.env.MONGO_URI;
 

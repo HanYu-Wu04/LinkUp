@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import User from "@/database/userSchema";
 
 // TODO: add radius for location. This will be used to search for events within a certain radius
 
@@ -44,7 +43,7 @@ const EventSchema = new Schema<IEvent>({
     },
   },
   imageUrl: { type: String },
-  attendees: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  attendees: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 // Model: Checks if the Event model already exists, otherwise creates it

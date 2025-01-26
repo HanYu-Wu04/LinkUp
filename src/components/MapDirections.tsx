@@ -5,7 +5,7 @@ export default function MapDirections({ lat, lng }: { lat: number; lng: number }
       target="_blank"
       rel="noopener noreferrer"
     >
-      Get directions
+      Get Directions
     </a>
   );
 }

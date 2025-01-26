@@ -1,5 +1,5 @@
 import connectDB from "@/database/db";
-import userSchema from "@/database/userSchema";
+import { User } from "@/database/User";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = await userSchema.findOne({ phoneNumber });
+    const existingUser = await User.findOne({ phoneNumber });
     if (existingUser) {
       return NextResponse.json("User already exists.", { status: 400, statusText: "User already exists." });
     }
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, salt); // Hash the password with the salt
 
     // Create the user in the database
-    const user = await userSchema.create({
+    const user = await User.create({
       phoneNumber,
       password: hashedPassword,
       firstName,

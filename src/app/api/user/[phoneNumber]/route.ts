@@ -1,5 +1,5 @@
 import connectDB from "@/database/db";
-import User from "@/database/userSchema";
+import { User } from "@/database/index";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }: { params: { phoneNumber: string } }) {

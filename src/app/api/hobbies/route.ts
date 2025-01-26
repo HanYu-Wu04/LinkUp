@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import connectDB from "@/database/db";
-import userSchema from "@/database/userSchema";
+import { User } from "@/database/index";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     const phoneNumber = session.phoneNumber;
-    const user = await userSchema.findOneAndUpdate({ phoneNumber }, { $set: { hobbies } }, { new: true });
+    const user = await User.findOneAndUpdate({ phoneNumber }, { $set: { hobbies } }, { new: true });
 
     if (!user) {
       return NextResponse.json("User not found.", { status: 404 });

@@ -1,5 +1,5 @@
 import connectDB from "@/database/db";
-import userSchema from "@/database/userSchema";
+import { User } from "@/database/index";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   if (!phoneNumber) {
     return NextResponse.json("Invalid input.", { status: 400, statusText: "Missing phone number." });
   }
-  const user = await userSchema.findOne({ phoneNumber });
+  const user = await User.findOne({ phoneNumber });
   console.log("user", user);
   return NextResponse.json({ isUser: user !== null });
 }

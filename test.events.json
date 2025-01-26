@@ -1,0 +1,21 @@
+[
+  {
+    "_id": {
+      "$oid": "679559e7544b7d5ab20c709b"
+    },
+    "name": "Beavers Day Out",
+    "description": "Join us for an exciting hike through the beautiful trails of San Luis Obispo. Explore nature, meet new friends, and enjoy the outdoors!",
+    "hobby": "Hiking",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": ["679483297f0e476ddc890c3d"],
+    "startingParticipants": 1,
+    "capacity": 15,
+    "date": "2025-02-15T09:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-120.6631, 35.2828]
+    },
+    "imageUrl": "https://example.com/images/mountain-hike.jpg",
+    "attendees": []
+  }
+]

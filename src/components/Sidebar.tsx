@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Home, MessageSquare, User, LogOut, Plus } from "lucide-react";
+import { Home, MessageSquare, User, LogOut, Plus, UsersRound } from "lucide-react";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import DarkModeToggle from "./DarkModeToggle";
@@ -46,6 +47,7 @@ export const Sidebar = () => {
     { icon: MessageSquare, label: "Messages", path: "/messages" },
     { icon: Plus, label: "Add Event", path: "/event" },
     { icon: User, label: "View Profile", path: "/profile" },
+    { icon: UsersRound, label: "Friends", path: "/friends" },
     { icon: LogOut, label: "Log Out", path: "/" }, // Update to use onClick
   ];
 

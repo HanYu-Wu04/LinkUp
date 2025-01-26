@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useState } from "react";
 import MapComponent from "./MapComponent";
 import { useForm } from "react-hook-form";
@@ -10,6 +11,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DateTimePicker } from "./ui/DateTimePicker";
+import { useSession } from "next-auth/react";
 
 export function EventForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,8 +25,49 @@ export function EventForm() {
       maxParticipants: 1,
       currentParticipants: 0,
       hobby: "test hobby",
+      owner: "test owner",
     },
   });
+
+  const { data: sessionData } = useSession();
+  const [profileImage, setProfileImage] = useState("");
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch user data by phone number
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const phoneNumber = sessionData?.phoneNumber || localStorage.getItem("phoneNumber");
+
+      if (!phoneNumber) {
+        setError("Phone number is not available.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/user/${phoneNumber}`, {
+          method: "GET",
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch user data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setUserData(data);
+        setProfileImage(localStorage.getItem("profilePic") || data.profileImage || "");
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setError("Unable to fetch user details.");
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [sessionData]);
 
   // Callback to sync marker position with the form
   const handleMapMarkerChange = (lat: number, lng: number) => {
@@ -58,6 +101,42 @@ export function EventForm() {
       setIsSubmitting(false);
     }
   }
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const phoneNumber = sessionData?.phoneNumber || localStorage.getItem("phoneNumber");
+
+      if (!phoneNumber) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/user/${phoneNumber}`, {
+          method: "GET",
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch user data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Set user data and update owner in the form
+        const ownerId = data._id.toString(); // Ensure you get only the string value of the ObjectId
+        setUserData(data);
+
+        // Dynamically set the owner field in the form
+        form.setValue("owner", ownerId);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setError("Unable to fetch user details.");
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <Form {...form}>

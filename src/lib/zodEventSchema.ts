@@ -9,6 +9,7 @@ export const eventSchema = z.object({
   currentParticipants: z.number().min(0),
   hobby: z.string().min(3, "Event hobby must be at least 3 characters long"),
   description: z.string().min(3, "Event hobby must be at least 3 characters long"),
+  owner: z.string(),
 });
 
 export type EventType = z.infer<typeof eventSchema>;

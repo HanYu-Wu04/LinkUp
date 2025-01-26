@@ -10,6 +10,7 @@ export const signInSchema = z.object({
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
+    objectId?: string;
     phoneNumber?: string;
     firstName?: string;
     lastName?: string;
@@ -17,6 +18,7 @@ declare module "next-auth" {
 }
 
 interface ExtendedUser extends User {
+  _id: string;
   phoneNumber: string; // Add custom property
   firstName: string;
   lastName: string;
@@ -53,6 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         const user = await resp.json();
+        console.log(user);
         return user || null; // Return user if successful
       },
     }),
@@ -61,6 +64,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       // Extend token with username
       if (user) {
+        console.log("JWT callback", user);
+        token.objectId = (user as ExtendedUser)._id;
         token.phoneNumber = (user as ExtendedUser).phoneNumber;
         token.firstName = (user as ExtendedUser).firstName;
         token.lastName = (user as ExtendedUser).lastName;
@@ -69,7 +74,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       // Add username to session
-      return { ...session, phoneNumber: token.phoneNumber };
+      return {
+        ...session,
+        phoneNumber: token.phoneNumber,
+        objectId: token.objectId,
+        firstName: token.firstName,
+        lastName: token.lastName,
+      };
     },
   },
 });

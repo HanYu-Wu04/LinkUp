@@ -1,10 +1,10 @@
 import React from "react";
+import UserProfile from "../../../components/UserProfile";
 
-export default function page() {
+export default function Page() {
   return (
     <div>
-      Hello worldisafu hodsfusdahf uodsafsad fdsauifsdhau9 fpui9dsahu9f sadopufhousadfh oiuadshoupfdsa hopufdshaoupfs
-      dsafhudsauofdsaoufuohpads fopu
+      <UserProfile />
     </div>
   );
 }

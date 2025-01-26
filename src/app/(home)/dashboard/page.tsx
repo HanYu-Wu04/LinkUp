@@ -4,11 +4,17 @@ import { EventCard } from "@/components/EventCard";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { IEvent } from "@/database/eventSchema";
+import { Filter, Search } from "lucide-react";
 
 const Dashboard = () => {
   const [yourEvents, setYourEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showHobbyDropdown, setShowHobbyDropdown] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedHobby, setSelectedHobby] = useState("");
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -42,6 +48,7 @@ const Dashboard = () => {
         }
         data = await response.json();
         setAllEvents(data || []);
+        setFilteredEvents(data || []);
       } catch (error) {
         toast({
           title: "Error",
@@ -55,6 +62,27 @@ const Dashboard = () => {
 
     fetchEvents();
   }, [toast]);
+
+  useEffect(() => {
+    let result = allEvents;
+
+    // Filter by hobby
+    if (selectedHobby) {
+      result = result.filter((event) => event.hobby === selectedHobby);
+    }
+
+    // Search by event name or description
+    if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
+      result = result.filter(
+        (event) =>
+          event.name.toLowerCase().includes(searchTermLower) ||
+          event.description.toLowerCase().includes(searchTermLower),
+      );
+    }
+
+    setFilteredEvents(result);
+  }, [selectedHobby, searchTerm, allEvents]);
 
   const userRegisteredBeaversDayOut = yourEvents.some((event: IEvent) => event.name === "Beavers Day Out");
 
@@ -156,10 +184,61 @@ const Dashboard = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="text-3xl font-bold">All Events</h2>
-              {allEvents.length > 0 ? (
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold">All Events</h2>
+                <div className="flex items-center space-x-4">
+                  {/* Hobby Filter Dropdown */}
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowHobbyDropdown(!showHobbyDropdown)}
+                      className="rounded-full p-2 hover:bg-gray-200"
+                    >
+                      <Filter className="h-5 w-5" />
+                    </button>
+                    {showHobbyDropdown && (
+                      <div className="absolute right-0 z-10 mt-2 w-48 rounded-md border bg-white shadow-lg">
+                        <button
+                          onClick={() => {
+                            setSelectedHobby("");
+                            setShowHobbyDropdown(false);
+                          }}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                        >
+                          Clear Filter
+                        </button>
+                        {hobbies.map((hobby, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              setSelectedHobby(hobby);
+                              setShowHobbyDropdown(false);
+                            }}
+                            className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                          >
+                            {hobby}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Search Input */}
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search events..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-64 rounded-md border py-2 pl-8 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <Search className="absolute left-2 top-3 h-4 w-4 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              {filteredEvents.length > 0 ? (
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {allEvents.map((event: any, index) => (
+                  {filteredEvents.map((event: any, index) => (
                     <EventCard key={index} event={event} />
                   ))}
                 </div>

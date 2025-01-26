@@ -7,6 +7,8 @@ export const eventSchema = z.object({
   experienceLevel: z.enum(["Beginner", "Intermediate", "Advanced"]),
   maxParticipants: z.number().min(1, "At least one participant is required"),
   currentParticipants: z.number().min(0),
+  hobby: z.string().min(3, "Event hobby must be at least 3 characters long"),
+  description: z.string().min(3, "Event hobby must be at least 3 characters long"),
 });
 
 export type EventType = z.infer<typeof eventSchema>;

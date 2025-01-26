@@ -13,36 +13,34 @@ import User from "@/database/userSchema";
 // Event Schema Interface for TypeScript
 export interface IEvent extends Document {
   name: string;
-  description: string;
-  hobby: string;
-  owner: Schema.Types.ObjectId; // Reference to User model
-  participants: Schema.Types.ObjectId[]; // List of User references
-  attendees: Schema.Types.ObjectId[];
-  startingParticipants: number;
-  capacity: number;
-  date: Date;
-  location: { type: string; coordinates: [number, number] };
+  description?: string;
+  hobby?: string;
+  owner?: Schema.Types.ObjectId; // Reference to User model
+  participants?: Schema.Types.ObjectId[]; // List of User references
+  attendees?: Schema.Types.ObjectId[];
+  startingParticipants?: number;
+  capacity?: number;
+  date?: Date;
+  location?: { type: string; coordinates: [number, number] };
   imageUrl?: string;
 }
 
 const EventSchema = new Schema<IEvent>({
   name: { type: String, required: true },
-  description: { type: String, required: true },
-  hobby: { type: String, required: true },
-  owner: { type: Schema.Types.ObjectId, ref: "user", required: true },
-  participants: [{ type: Schema.Types.ObjectId, ref: "user" }],
-  startingParticipants: { type: Number, required: true },
-  capacity: { type: Number, required: true },
-  date: { type: Date, required: true },
+  description: { type: String, required: false },
+  hobby: { type: String, required: false },
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: false },
+  participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  startingParticipants: { type: Number },
+  capacity: { type: Number },
+  date: { type: Date },
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`
       enum: ["Point"], // 'location.type' must be 'Point'
-      required: true,
     },
     coordinates: {
       type: [Number],
-      required: true,
     },
   },
   imageUrl: { type: String },

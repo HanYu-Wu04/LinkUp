@@ -9,14 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useSession } from "next-auth/react";
 import { DateTimePicker } from "./ui/DateTimePicker";
 
 export function EventForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { status, data, update } = useSession();
-  data?.objectId;
   const form = useForm<EventType>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
@@ -26,6 +22,7 @@ export function EventForm() {
       experienceLevel: "Beginner",
       maxParticipants: 1,
       currentParticipants: 0,
+      hobby: "test hobby",
     },
   });
 
@@ -39,7 +36,7 @@ export function EventForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/event", {
+      const response = await fetch("/api/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,6 +76,21 @@ export function EventForm() {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="hobby"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Hobby</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter hobby related to the event" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* Map Component */}
         <div>
           <MapComponent onMarkerChange={handleMapMarkerChange} /> {/* Pass callback to MapComponent */}
@@ -176,6 +188,20 @@ export function EventForm() {
                 <Input type="number" {...field} onChange={(e) => field.onChange(Number.parseInt(e.target.value))} />
               </FormControl>
               <FormDescription>The number of participants currently in the group.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter event description" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

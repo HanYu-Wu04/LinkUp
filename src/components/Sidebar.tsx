@@ -4,7 +4,6 @@ import { Home, MessageSquare, User, LogOut, Plus, UsersRound } from "lucide-reac
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import DarkModeToggle from "./DarkModeToggle";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";

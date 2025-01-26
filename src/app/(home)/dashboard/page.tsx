@@ -56,10 +56,8 @@ const Dashboard = () => {
     fetchEvents();
   }, [toast]);
 
-  // Check if the user has registered for Beavers Day Out
   const userRegisteredBeaversDayOut = yourEvents.some((event: IEvent) => event.name === "Beavers Day Out");
 
-  // If the user registered for Beavers Day Out, add the new events to the recommended list
   const recommendedEvents = userRegisteredBeaversDayOut
     ? [
         {
@@ -117,55 +115,61 @@ const Dashboard = () => {
     : allEvents;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-12">
-      {isLoading ? (
-        <div className="text-center">Loading...</div>
-      ) : (
-        <>
-          <section className="space-y-6">
-            <h2 className="text-3xl font-bold">Your Events</h2>
-            {yourEvents.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {yourEvents.map((event: IEvent, index) => (
-                  <EventCard key={index} event={event} isRegistered />
-                ))}
-              </div>
-            ) : (
-              <p>No events found.</p>
-            )}
-          </section>
+    <div className="min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div className="w-64">{/* Sidebar content */}</div>
 
-          <section className="space-y-6">
-            <h2 className="text-3xl font-bold">AI Recommended Events</h2>
-            {userRegisteredBeaversDayOut ? (
-              recommendedEvents.length > 0 ? (
+      {/* Main Content */}
+      <div className="flex-grow space-y-12 pl-8 pr-8 pt-8">
+        {isLoading ? (
+          <div className="text-center">Loading...</div>
+        ) : (
+          <>
+            <section className="space-y-6">
+              <h2 className="text-3xl font-bold">Your Events</h2>
+              {yourEvents.length > 0 ? (
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {yourEvents.map((event: IEvent, index) => (
+                    <EventCard key={index} event={event} isRegistered />
+                  ))}
+                </div>
+              ) : (
+                <p>No events found.</p>
+              )}
+            </section>
+
+            <section className="space-y-6">
+              <h2 className="text-3xl font-bold">AI Recommended Events</h2>
+              {userRegisteredBeaversDayOut ? (
+                recommendedEvents.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {recommendedEvents.map((event: any, index) => (
+                      <EventCard key={index} event={event} />
+                    ))}
+                  </div>
+                ) : (
+                  <p>No recommended events at the moment.</p>
+                )
+              ) : (
+                <p>No recommended events at the moment.</p>
+              )}
+            </section>
+
+            <section className="space-y-6">
+              <h2 className="text-3xl font-bold">All Events</h2>
+              {allEvents.length > 0 ? (
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {recommendedEvents.map((event: any, index) => (
+                  {allEvents.map((event: any, index) => (
                     <EventCard key={index} event={event} />
                   ))}
                 </div>
               ) : (
-                <p>No recommended events at the moment.</p>
-              )
-            ) : (
-              <p>No recommended events at the moment.</p>
-            )}
-          </section>
-
-          <section className="space-y-6">
-            <h2 className="text-3xl font-bold">All Events</h2>
-            {allEvents.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {allEvents.map((event: any, index) => (
-                  <EventCard key={index} event={event} />
-                ))}
-              </div>
-            ) : (
-              <p>No events found.</p>
-            )}
-          </section>
-        </>
-      )}
+                <p>No events found.</p>
+              )}
+            </section>
+          </>
+        )}
+      </div>
     </div>
   );
 };

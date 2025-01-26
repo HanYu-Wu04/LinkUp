@@ -11,6 +11,9 @@ let connection: typeof mongoose;
 const connectDB = async () => {
   if (!connection) {
     connection = await mongoose.connect(url);
+    // Import all models here
+    const Event = require("@/database/eventSchema");
+    const User = require("@/database/userSchema");
     return connection;
   }
 };

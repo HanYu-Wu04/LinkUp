@@ -6,10 +6,9 @@ import User from "@/database/userSchema";
 const mongoURI = process.env.MONGO_URI;
 
 const sportsEvents = [
-  "Football Match",
-  "Basketball Tournament",
-  "Tennis Open",
-  "Soccer League",
+  "Soccer",
+  "Basketball",
+  "Tennis",
   "Volleyball Championship",
   "Baseball Game",
   "Swimming Competition",
@@ -18,9 +17,9 @@ const sportsEvents = [
   "Table Tennis Invitational",
   "Badminton Open",
   "Golf Championship",
-  "Running Race",
-  "Cycling Event",
-  "Hockey Game",
+  "Running",
+  "Cycling",
+  "Hockey",
   "Archery Competition",
   "Rock Climbing",
   "Wrestling Tournament",

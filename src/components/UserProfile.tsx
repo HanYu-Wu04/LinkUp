@@ -125,7 +125,9 @@ export default function UserProfile() {
           <div className="flex justify-between">
             <span className="text-lg font-bold text-black">Hobby</span>
             <span className="font-semibold text-black">
-              {userData?.hobby?.length > 0 ? userData.hobby : "No hobbies yet"}
+              {Array.isArray(userData?.hobbies) && userData.hobbies.length > 0
+                ? userData.hobbies.join(", ")
+                : "No hobbies yet"}
             </span>
           </div>
         </div>

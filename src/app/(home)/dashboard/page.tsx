@@ -134,14 +134,21 @@ const Dashboard = () => {
     }
 
     // Filter by radius
-    if (userLocation.lat !== 0 && userLocation.lng !== 0) {
+    if (userLocation.lat !== 0 && userLocation.lng !== 0 && radius > 0) {
       result = result.filter((event) => {
+        if (!event.location?.coordinates || event.location.coordinates.length < 2) {
+          // Skip events with invalid coordinates
+          return false;
+        }
+
         const distance = calculateDistance(
           userLocation.lat,
           userLocation.lng,
-          event.location.coordinates[1],
-          event.location.coordinates[0],
+          event.location.coordinates[1], // latitude of event
+          event.location.coordinates[0], // longitude of event
         );
+
+        // Include events within the radius
         return distance <= radius;
       });
     }

@@ -65,7 +65,7 @@ export default function Signup() {
     localStorage.setItem("password", data.password);
     localStorage.setItem("firstName", data.firstName);
     localStorage.setItem("lastName", data.lastName);
-    router.push("/login");
+    router.push("/survey");
 
     const response = await fetch("/api/user/signup", {
       method: "POST",
@@ -81,7 +81,7 @@ export default function Signup() {
 
     await signIn("credentials", {
       redirect: true,
-      redirectTo: "/survey",
+      redirectTo: "/",
       phoneNumber: data.phoneNumber,
       password: data.password,
     });

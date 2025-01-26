@@ -7,6 +7,14 @@ export interface ConversationInterface {
   online: boolean;
 }
 
+export interface MessageInterface {
+  id?: string;
+  content: string;
+  sender: string;
+  timestamp: string;
+  type: string;
+}
+
 export const mockConversations = [
   {
     id: "1",

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/api/route.ts",
-    "src/app/(home)/dashboard/page.tsx"
+    "src/app/(home)/dashboard/page.tsx",
+    "server.js"
   ],
   "exclude": ["node_modules"]
 }

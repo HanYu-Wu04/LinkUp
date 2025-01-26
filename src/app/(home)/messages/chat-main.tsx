@@ -8,78 +8,135 @@ import { Mic, Paperclip, Send, Smile } from "lucide-react";
 import Image from "next/image";
 import { mockConversations, mockMessages } from "./mock-data";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction, MouseEvent } from "react";
+import { socket } from "@/socket";
+import { MessageInterface } from "./mock-data";
+import { useSession } from "next-auth/react";
 
-interface ChatMainProps {
-  selectedId: string | null;
-  className?: string;
+function handleSendMessage(e: MouseEvent<HTMLButtonElement>, message: string, userId: string, selectedId: string) {
+  e.preventDefault();
+  if (!message.trim() || !selectedId) return;
+
+  const data: MessageInterface = {
+    content: message,
+    sender: userId,
+    type: "text",
+    timestamp: new Date().toISOString(),
+  };
+  console.log(data);
+
+  // Emit message to the room
+  socket.emit("message", { roomId: selectedId, data });
+
+  // Save the message in the database
+  fetch(`/api/messages/${selectedId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 }
 
-export function ChatMain({ selectedId, className }: ChatMainProps) {
-  const selectedChat = selectedId ? mockConversations.find((c) => c.id === selectedId) : null;
-  const messages = selectedId ? mockMessages[selectedId] || [] : [];
+function handleReceiveMessage(setMessages: Dispatch<SetStateAction<MessageInterface[]>>, selectedId: string) {
+  if (!selectedId) return;
+
+  console.log("Joining room:", selectedId);
+  socket.emit("joinRoom", selectedId);
+
+  socket.on("message", (data: MessageInterface) => {
+    console.log("Received message:", data);
+    setMessages((messages) => [...messages, data]);
+  });
+
+  return () => {
+    socket.off("message");
+  };
+}
+
+export function ChatMain({ selectedId, className, eventName }: ChatMainProps) {
+  const [messages, setMessages] = useState<MessageInterface[]>([]);
+  const [message, setMessage] = useState("");
+  const { data: sessionData, status } = useSession();
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (selectedId) {
+      fetch(`/api/messages/${selectedId}`).then((resp) => {
+        if (resp.ok) {
+          resp.json().then((data: MessageInterface[]) => setMessages(data));
+        }
+      });
+
+      // Set up room and listener for messages
+      const cleanup = handleReceiveMessage(setMessages, selectedId);
+
+      return cleanup; // Cleanup on component unmount or `selectedId` change
+    }
+  }, [selectedId]);
+
+  useEffect(() => {
+    if (status === "authenticated" && sessionData) {
+      setUserId(sessionData.objectId);
+    }
+  }, [status, sessionData]);
 
   return (
     <div className={cn("flex flex-col w-full h-full", className)}>
-      {selectedChat ? (
+      {selectedId ? (
         <>
+          {/* Chat header */}
           <div className="border-b p-4">
             <div className="flex items-center gap-2">
               <Avatar>
-                <AvatarImage src={selectedChat.avatar} />
-                <AvatarFallback>{selectedChat.name[0]}</AvatarFallback>
+                <AvatarFallback>{eventName || "Chat"}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-medium">{selectedChat.name}</p>
-                <p className="text-sm text-muted-foreground">{selectedChat.online ? "Online" : "Offline"}</p>
+                <p className="font-medium">{eventName}</p>
+                <p className="text-sm text-muted-foreground">{"Online"}</p>
               </div>
             </div>
           </div>
+
+          {/* Message area */}
           <ScrollArea className="flex-1 p-4">
             <div className="space-y-4">
-              {messages.map((message) => (
-                <div key={message.id} className={`flex ${message.sender === "me" ? "justify-end" : "justify-start"}`}>
+              {messages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.sender === userId ? "justify-end" : "justify-start"}`}>
                   <Card
-                    className={`max-w-[70%] p-3 ${message.sender === "me" ? "bg-primary text-primary-foreground" : ""}`}
+                    className={`max-w-[70%] p-3 ${msg.sender === userId ? "bg-primary text-primary-foreground" : ""}`}
                   >
-                    {message.type === "image" ? (
-                      <div className="relative h-48 w-[520px]">
-                        <Image
-                          src={message.content || "/placeholder.svg"}
-                          alt="Shared image"
-                          fill
-                          className="rounded-lg object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <p className="text-sm">{message.content}</p>
-                    )}
-                    <p className="mt-1 text-xs text-muted-foreground">{message.timestamp}</p>
+                    <p className="text-sm">{msg.content}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{msg.timestamp}</p>
                   </Card>
                 </div>
               ))}
             </div>
           </ScrollArea>
+
+          {/* Input field */}
           <div className="border-t p-4">
             <form className="flex items-center gap-2">
-              <Button type="button" size="icon" variant="ghost">
-                <Paperclip className="h-5 w-5" />
-              </Button>
-              <Input placeholder="Type a message..." className="flex-1" autoComplete="off" />
-              <Button type="button" size="icon" variant="ghost">
-                <Smile className="h-5 w-5" />
-              </Button>
-              <Button type="button" size="icon" variant="ghost">
-                <Mic className="h-5 w-5" />
-              </Button>
-              <Button type="submit" size="icon">
+              <Input
+                placeholder="Type a message..."
+                className="flex-1"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <Button
+                type="submit"
+                onClick={(e) => {
+                  handleSendMessage(e, message, userId || "", selectedId || "");
+                  setMessage(""); // Clear input
+                }}
+              >
                 <Send className="h-5 w-5" />
               </Button>
             </form>
           </div>
         </>
       ) : (
-        <div className="flex h-full w-full flex-1 items-center justify-center bg-background">
+        <div className="flex h-full w-full items-center justify-center">
           <p className="text-muted-foreground">Select a conversation to start chatting</p>
         </div>
       )}

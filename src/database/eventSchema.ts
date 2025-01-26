@@ -1,3 +1,4 @@
+import { MessageInterface } from "@/app/(home)/messages/mock-data";
 import mongoose, { Schema, Document } from "mongoose";
 
 // TODO: add radius for location. This will be used to search for events within a certain radius
@@ -17,6 +18,7 @@ export interface IEvent extends Document {
   owner?: Schema.Types.ObjectId; // Reference to User model
   participants?: Schema.Types.ObjectId[]; // List of User references
   attendees?: Schema.Types.ObjectId[];
+  messages?: MessageInterface[];
   startingParticipants?: number;
   capacity?: number;
   date?: Date;
@@ -42,6 +44,7 @@ const EventSchema = new Schema<IEvent>({
       type: [Number],
     },
   },
+  messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
   imageUrl: { type: String },
   attendees: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });

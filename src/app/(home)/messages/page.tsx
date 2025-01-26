@@ -16,7 +16,7 @@ export default function ChatPage() {
           const lastIdx = mockConv.length;
           const conversations: ConversationInterface[] = data.map((val, idx) => {
             return {
-              id: String(lastIdx + idx),
+              id: val._id,
               name: val.name,
               avatar: "/placeholder.svg?text=DS",
               lastMessage: "HI!!! Happy to have you here.",

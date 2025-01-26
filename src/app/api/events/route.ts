@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
         : [],
       startingParticipants: eventData.startingParticipants || 0, // Default to 0
       capacity: eventData.maxParticipants || 1, // Use maxParticipants as capacity
-      date: eventData.date || new Date(), // Default to the current date
+      date: "2025-03-12T20:30:00.000Z" || "2025-03-12T20:30:00.000Z", // Default to the current date
       location:
         eventData.latitude && eventData.longitude
           ? {

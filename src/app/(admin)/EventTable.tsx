@@ -117,7 +117,7 @@ export default function EventTable({ events }: EventTableProps) {
               <Input
                 type="date"
                 value={new Date(editingEvent.date).toISOString().split("T")[0]}
-                onChange={(e) => setEditingEvent({ ...editingEvent, date: new Date(e.target.value).toISOString() })}
+                onChange={(e) => setEditingEvent({ ...editingEvent, date: "2025-03-12T20:30:00.000Z" })}
                 className="mb-2"
               />
               <Input

@@ -34,7 +34,7 @@ const EventSchema = new Schema<IEvent>({
   participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   startingParticipants: { type: Number },
   capacity: { type: Number },
-  date: { type: Date },
+  date: { type: String },
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`

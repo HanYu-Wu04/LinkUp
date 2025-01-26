@@ -161,7 +161,7 @@ const generateDescription = (name: string, type: "sports" | "hobby") => {
 interface EventData {
   name: string;
   hobby: string;
-  date: Date;
+  date: String;
   startingParticipants: number;
   capacity: number;
   owner: String;
@@ -181,7 +181,7 @@ const generateEvents = async (type: "sports" | "hobby", users: any[]): Promise<E
       break;
     }
 
-    const randomDate = new Date(date.getTime() + Math.random() * 10000000000);
+    const randomDate = "2025-03-12T20:30:00.000Z";
     const name = type === "sports" ? sportsEvents[i % sportsEvents.length] : hobbyEvents[i % hobbyEvents.length];
 
     const event = {

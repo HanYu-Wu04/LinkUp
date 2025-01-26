@@ -97,9 +97,22 @@
 }
 
 .formFields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.leftColumn,
+.rightColumn {
+  flex: 1;
+}
+
+.leftColumn {
+  margin-right: 20px;
+}
+
+.rightColumn {
+  margin-left: 20px;
 }
 
 .fieldTitle {
@@ -107,6 +120,9 @@
   margin-bottom: 8px;
   font-size: 1rem;
   color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fieldValue {
@@ -137,5 +153,18 @@
   .mainContent {
     grid-column: 1;
     grid-row: 1 / span 2; /* Updated */
+  }
+
+  .formFields {
+    flex-direction: column;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    margin: 0;
+  }
+
+  .rightColumn {
+    margin-top: 20px;
   }
 }

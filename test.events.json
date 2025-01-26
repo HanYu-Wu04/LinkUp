@@ -17,5 +17,613 @@
     },
     "imageUrl": "https://example.com/images/mountain-hike.jpg",
     "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70d4"
+    },
+    "name": "Book Club Meetup",
+    "description": "Discussing the latest thriller novel and enjoying some tea.",
+    "hobby": "Reading",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 12,
+    "date": "2025-03-10T19:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-73.9857, 40.758]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?reading",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70d5"
+    },
+    "name": "Sunday Brunch Cook-Off",
+    "description": "A friendly cooking competition with a focus on brunch dishes.",
+    "hobby": "Cooking",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 10,
+    "date": "2025-03-17T11:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-118.2437, 34.0522]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?cooking",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70d6"
+    },
+    "name": "Urban Photography Walk",
+    "description": "Exploring the city streets and capturing interesting moments.",
+    "hobby": "Photography",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 4,
+    "capacity": 15,
+    "date": "2025-03-23T14:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-0.118092, 51.509865]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?photography",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70d7"
+    },
+    "name": "Casual Gaming Night",
+    "description": "A chill evening of video games and board games.",
+    "hobby": "Gaming",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 1,
+    "capacity": 8,
+    "date": "2025-03-15T19:30:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [13.404954, 52.520008]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?gaming",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70d8"
+    },
+    "name": "Mountain Hiking Adventure",
+    "description": "Hiking up to a mountain lookout point",
+    "hobby": "Hiking",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 5,
+    "capacity": 16,
+    "date": "2025-03-16T08:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-111.891047, 40.760779]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?hiking",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70d9"
+    },
+    "name": "Live Music Jam Session",
+    "description": "An informal gathering to play and enjoy live music.",
+    "hobby": "Music",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 10,
+    "date": "2025-03-22T20:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [2.3522, 48.8566]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?music",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70da"
+    },
+    "name": "Art in the Park",
+    "description": "A collaborative art session in a local park.",
+    "hobby": "Art",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 14,
+    "date": "2025-03-24T15:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [12.5683, 55.6761]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?art",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70db"
+    },
+    "name": "Pick-up Basketball Game",
+    "description": "Casual basketball game at the community court.",
+    "hobby": "Sports",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 4,
+    "capacity": 16,
+    "date": "2025-03-21T17:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [151.2093, -33.8688]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?sports",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70dc"
+    },
+    "name": "Weekend Travel Planning Session",
+    "description": "Brainstorming ideas for a weekend getaway.",
+    "hobby": "Travel",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 1,
+    "capacity": 10,
+    "date": "2025-03-09T13:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [121.4737, 31.2304]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?travel",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70dd"
+    },
+    "name": "Community Gardening Day",
+    "description": "Planting flowers and vegetables in the local community garden.",
+    "hobby": "Gardening",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 5,
+    "capacity": 15,
+    "date": "2025-03-17T10:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-77.0369, 38.9072]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?gardening",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70de"
+    },
+    "name": "Crafting Circle",
+    "description": "Sharing our latest craft projects and learning new techniques.",
+    "hobby": "Crafting",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 12,
+    "date": "2025-03-13T18:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-95.3698, 29.7604]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?crafting",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70df"
+    },
+    "name": "Morning Fitness Bootcamp",
+    "description": "High-energy fitness session to start the day.",
+    "hobby": "Fitness",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 10,
+    "date": "2025-03-19T07:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-75.1652, 39.9526]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?fitness",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e0"
+    },
+    "name": "Creative Writing Workshop",
+    "description": "A workshop to improve our creative writing skills.",
+    "hobby": "Writing",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 4,
+    "capacity": 14,
+    "date": "2025-03-20T19:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [116.4074, 39.9042]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?writing",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e1"
+    },
+    "name": "Movie Night Under the Stars",
+    "description": "Watching a classic movie in an outdoor setting.",
+    "hobby": "Movies",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 1,
+    "capacity": 16,
+    "date": "2025-03-18T20:30:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-122.4194, 37.7749]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?movies",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e2"
+    },
+    "name": "Coding Hackathon",
+    "description": "A collaborative coding challenge.",
+    "hobby": "Coding",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 5,
+    "capacity": 12,
+    "date": "2025-03-23T09:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-87.6298, 41.8781]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?coding",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e3"
+    },
+    "name": "Dance Workshop",
+    "description": "Learning a new dance style together",
+    "hobby": "Dancing",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 14,
+    "date": "2025-03-11T16:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [139.6917, 35.6895]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?dancing",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e4"
+    },
+    "name": "Historical Fiction Book Discussion",
+    "description": "Exploring the nuances of historical fiction",
+    "hobby": "Reading",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 12,
+    "date": "2025-03-12T18:30:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.0589, 42.3601]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?reading",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e5"
+    },
+    "name": "Global Cuisine Cooking Class",
+    "description": "Learning to make dishes from around the world",
+    "hobby": "Cooking",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 1,
+    "capacity": 10,
+    "date": "2025-03-13T15:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [103.8198, 1.3521]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?cooking",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e6"
+    },
+    "name": "Nature Photography Expedition",
+    "description": "Capturing the beauty of nature through photography",
+    "hobby": "Photography",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 4,
+    "capacity": 15,
+    "date": "2025-03-14T10:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.388, 33.749]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?photography",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e7"
+    },
+    "name": "Strategy Board Game Tournament",
+    "description": "A fun and competitive board game tournament",
+    "hobby": "Gaming",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 5,
+    "capacity": 16,
+    "date": "2025-03-16T16:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [174.7767, -36.8485]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?gaming",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e8"
+    },
+    "name": "Waterfall Hike",
+    "description": "Scenic hike to a beautiful waterfall",
+    "hobby": "Hiking",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 14,
+    "date": "2025-03-17T09:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.0577, 42.3581]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?hiking",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70e9"
+    },
+    "name": "Acoustic Music Circle",
+    "description": "A relaxed session of acoustic music",
+    "hobby": "Music",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 10,
+    "date": "2025-03-18T19:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-73.9851, 40.7588]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?music",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70ea"
+    },
+    "name": "Pottery Painting Workshop",
+    "description": "Learning to paint and decorate pottery",
+    "hobby": "Art",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 4,
+    "capacity": 12,
+    "date": "2025-03-19T14:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [12.5683, 55.6761]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?art",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70eb"
+    },
+    "name": "Beach Volleyball",
+    "description": "Friendly beach volleyball game",
+    "hobby": "Sports",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 1,
+    "capacity": 16,
+    "date": "2025-03-20T11:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [115.8605, -31.9505]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?sports",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70ec"
+    },
+    "name": "Backpacking Trip Planning",
+    "description": "Planning a backpacking trip",
+    "hobby": "Travel",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 5,
+    "capacity": 10,
+    "date": "2025-03-21T13:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-118.2437, 34.0522]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?travel",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70ed"
+    },
+    "name": "Herb Garden Workshop",
+    "description": "Learning to grow and use herbs",
+    "hobby": "Gardening",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 15,
+    "date": "2025-03-22T10:30:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-87.6298, 41.8781]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?gardening",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70ee"
+    },
+    "name": "DIY Jewelry Making",
+    "description": "Making your own jewelry",
+    "hobby": "Crafting",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 12,
+    "date": "2025-03-23T15:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [12.4964, 41.9028]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?crafting",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70ef"
+    },
+    "name": "Yoga in the Park",
+    "description": "A relaxing yoga session in the park",
+    "hobby": "Fitness",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 4,
+    "capacity": 10,
+    "date": "2025-03-24T09:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.0589, 42.3601]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?fitness",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70f0"
+    },
+    "name": "Poetry Writing Meetup",
+    "description": "Sharing and discussing poetry",
+    "hobby": "Writing",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 1,
+    "capacity": 14,
+    "date": "2025-03-09T17:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [100.5018, 13.7563]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?writing",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70f1"
+    },
+    "name": "Indie Film Screening",
+    "description": "Watching and discussing an indie film",
+    "hobby": "Movies",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 5,
+    "capacity": 16,
+    "date": "2025-03-10T20:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-77.0369, 38.9072]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?movies",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70f2"
+    },
+    "name": "Intro to Python Workshop",
+    "description": "Learn the basics of python programming",
+    "hobby": "Coding",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 2,
+    "capacity": 12,
+    "date": "2025-03-11T10:00:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [-105.0001, 39.75]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?coding",
+    "attendees": []
+  },
+  {
+    "_id": {
+      "$oid": "6795a369544b7d5ab20c70f3"
+    },
+    "name": "Salsa Dancing Social",
+    "description": "Fun evening of Salsa dancing",
+    "hobby": "Dancing",
+    "owner": "679483297f0e476ddc890c3d",
+    "participants": [],
+    "startingParticipants": 3,
+    "capacity": 14,
+    "date": "2025-03-12T20:30:00.000Z",
+    "location": {
+      "type": "Point",
+      "coordinates": [116.4074, 39.9042]
+    },
+    "imageUrl": "https://source.unsplash.com/random/200x200/?dancing",
+    "attendees": []
   }
 ]

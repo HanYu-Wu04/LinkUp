@@ -50,4 +50,4 @@ const EventSchema = new Schema<IEvent>({
 });
 
 // Model: Checks if the Event model already exists, otherwise creates it
-export default mongoose.models.Event || mongoose.model<IEvent>("event", EventSchema);
+export default mongoose.models.Event || mongoose.model<IEvent>("Event", EventSchema);

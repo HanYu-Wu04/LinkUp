@@ -85,7 +85,7 @@ export default function Signup() {
 
     await signIn("credentials", {
       redirect: true,
-      redirectTo: "/survey",
+      redirectTo: "/",
       phoneNumber: data.phoneNumber,
       password: data.password,
     });

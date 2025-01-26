@@ -1,25 +1,22 @@
 "use client";
 
-import { Sidebar } from "@/components/Sidebar";
 import { EventCard } from "@/components/EventCard";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useSession } from "next-auth/react";
 import { IEvent } from "@/database/eventSchema";
 
 const Dashboard = () => {
   const [yourEvents, setYourEvents] = useState([]);
-  const [recommendedEvents, setRecommendedEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const { update, status, data } = useSession();
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
 
-        const response = await fetch("/api/events/individual", {
+        let response = await fetch("/api/events/registered", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -30,9 +27,21 @@ const Dashboard = () => {
           throw new Error("Failed to fetch events.");
         }
 
-        const data = await response.json();
+        let data = await response.json();
         setYourEvents(data);
-        setRecommendedEvents(data.recommendedEvents || []);
+
+        response = await fetch("/api/events/unregistered", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch events.");
+        }
+        data = await response.json();
+        setAllEvents(data || []);
       } catch (error) {
         toast({
           title: "Error",
@@ -46,9 +55,6 @@ const Dashboard = () => {
 
     fetchEvents();
   }, [toast]);
-
-  // Combine yourEvents and recommendedEvents to display under "All Events"
-  const allEvents = [...yourEvents, ...recommendedEvents];
 
   return (
     <div className="mx-auto max-w-5xl space-y-12">
@@ -71,10 +77,10 @@ const Dashboard = () => {
 
           <section className="space-y-6">
             <h2 className="text-3xl font-bold">AI Recommended Events</h2>
-            {recommendedEvents.length > 0 ? (
+            {allEvents.length > 0 ? (
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {recommendedEvents.map((event: any, index) => (
-                  <EventCard key={index} title={event.title} date={event.date} description={event.description} />
+                {allEvents.map((event: any, index) => (
+                  <EventCard key={index} event={event} />
                 ))}
               </div>
             ) : (
@@ -87,7 +93,7 @@ const Dashboard = () => {
             {allEvents.length > 0 ? (
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {allEvents.map((event: any, index) => (
-                  <EventCard key={index} title={event.title} date={event.date} description={event.description} />
+                  <EventCard key={index} event={event} />
                 ))}
               </div>
             ) : (

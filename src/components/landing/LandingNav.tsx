@@ -4,8 +4,10 @@ import { FiMenu, FiArrowRight, FiX, FiChevronDown } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import { useMotionValueEvent, AnimatePresence, useScroll, motion } from "framer-motion";
 import useMeasure from "react-use-measure";
+import { LinkIcon } from "lucide-react";
+import Link from "next/link";
 
-const FlyoutNav = () => {
+export default function LandingNav() {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
 
@@ -16,7 +18,7 @@ const FlyoutNav = () => {
   return (
     <nav
       className={`fixed top-0 z-50 w-full px-6 text-white 
-      transition-all duration-300 ease-out lg:px-12
+      transition-all duration-300 ease-out lg:px-12 
       ${scrolled ? "bg-neutral-950 py-3 shadow-xl" : "bg-neutral-950/0 py-6 shadow-none"}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -29,23 +31,26 @@ const FlyoutNav = () => {
       </div>
     </nav>
   );
-};
+}
 
 const Logo = ({ color = "white" }: { color?: string }) => {
   // Temp logo from https://logoipsum.com/
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-2xl font-bold" style={{ color }}>
-        Placeholder
-      </span>
-      <svg width="50" height="39" viewBox="0 0 50 39" fill={color} xmlns="http://www.w3.org/2000/svg" className="w-10">
+    <Link href="/">
+      <div className="flex cursor-pointer items-center gap-2">
+        <span className="text-2xl font-bold" style={{ color }}>
+          LinkUp
+        </span>
+        <LinkIcon />
+        {/* <svg width="50" height="39" viewBox="0 0 50 39" fill={color} xmlns="http://www.w3.org/2000/svg" className="w-10">
         <path d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z" stopColor={color}></path>
         <path
           d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
           stopColor={color}
         ></path>
-      </svg>
-    </div>
+      </svg> */}
+      </div>
+    </Link>
   );
 };
 
@@ -108,13 +113,17 @@ const NavLink = ({
 const CTAs = () => {
   return (
     <div className="flex items-center gap-3">
-      <button className="flex items-center gap-2 rounded-lg border-2 border-white px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-black">
-        <FaUserCircle />
-        <span>Sign in</span>
-      </button>
-      <button className="rounded-lg border-2 border-indigo-300 bg-indigo-300 px-4 py-2 font-semibold text-black transition-colors hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
-        Schedule a Demo
-      </button>
+      <Link href="/login">
+        <button className="flex items-center gap-2 rounded-lg border-2 border-white px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-black">
+          <FaUserCircle />
+          <span>Log in</span>
+        </button>
+      </Link>
+      <Link href="/signup">
+        <button className="rounded-lg border-2 border-indigo-300 bg-indigo-300 px-4 py-2 font-semibold text-black transition-colors hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
+          Sign Up
+        </button>
+      </Link>
     </div>
   );
 };
@@ -194,7 +203,9 @@ const CareersContent = () => {
       <div className="col-span-12 flex flex-col justify-between bg-indigo-600 p-6 lg:col-span-4">
         <div className="mb-6">
           <h2 className="mb-2 text-xl font-semibold text-white">Careers</h2>
-          <p className="text-sm text-indigo-100">Placeholder was rated a top place to work by Placeholder.</p>
+          <p className="text-sm text-indigo-100">
+            Join our team of talented individuals to help link the world together.
+          </p>
         </div>
         <a href="#" className="flex items-center gap-1 text-xs text-indigo-200 hover:underline">
           Careers site <FiArrowRight />
@@ -365,8 +376,6 @@ const MobileMenu = () => {
   );
 };
 
-export default Example;
-
 const LINKS = [
   {
     text: "About us",
@@ -382,9 +391,5 @@ const LINKS = [
     text: "Careers",
     href: "#",
     component: CareersContent,
-  },
-  {
-    text: "Documentation",
-    href: "#",
   },
 ];

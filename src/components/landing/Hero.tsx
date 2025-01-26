@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -5,13 +6,14 @@ const ShuffleHero = () => {
   return (
     <section className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-8 px-8 py-12 md:grid-cols-2">
       <div>
-        <span className="mb-4 block text-xs font-medium text-indigo-500 md:text-sm">Better every day</span>
-        <h3 className="text-4xl font-semibold md:text-6xl">Let&apos;s change it up a bit</h3>
+        <span className="mb-4 block text-xs font-medium text-indigo-500 md:text-sm">Fun with others</span>
+        <h3 className="text-4xl font-semibold text-slate-900 md:text-6xl">It&apos;s more fun with more people</h3>
         <p className="my-4 text-base text-slate-700 md:my-6 md:text-lg">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nobis in error repellat voluptatibus ad.
+          Find fun, exciting things to do with people who share your interests. Join today and start connecting with
+          others.
         </p>
         <button className="rounded bg-indigo-500 px-4 py-2 font-medium text-white transition-all hover:bg-indigo-600 active:scale-95">
-          Find a class
+          Find a group
         </button>
       </div>
       <ShuffleGrid />

@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { Camera } from "lucide-react";
 import { EventCard } from "@/components/EventCard";
 import { IEvent } from "@/database/eventSchema";
+import { useRouter } from "next/navigation";
 
 export default function UserProfile() {
   const { data: sessionData, status } = useSession();
@@ -13,6 +14,7 @@ export default function UserProfile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [registeredEvents, setRegisteredEvents] = useState<IEvent[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "loading") return;
@@ -129,6 +131,12 @@ export default function UserProfile() {
                 ? userData.hobbies.join(", ")
                 : "No hobbies yet"}
             </span>
+          </div>
+          {/* Edit Hobbies */}
+          <div className="mt-2 text-right">
+            <button className="text-blue-500 hover:underline" onClick={() => router.push("/survey")}>
+              Edit Hobby
+            </button>
           </div>
         </div>
       </div>

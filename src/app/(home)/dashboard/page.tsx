@@ -4,6 +4,7 @@ import { EventCard } from "@/components/EventCard";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { IEvent } from "@/database/eventSchema";
+import { useSession } from "next-auth/react";
 import { Filter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,8 @@ const Dashboard = () => {
   const [selectedHobby, setSelectedHobby] = useState("");
   const [radius, setRadius] = useState(50);
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
+  const [userData, setUserData] = useState(null);
+  const { data: sessionData, status } = useSession();
 
   const { toast } = useToast();
 
@@ -95,6 +98,32 @@ const Dashboard = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    const fetchUserData = async () => {
+      const phoneNumber = sessionData?.phoneNumber || localStorage.getItem("phoneNumber");
+
+      try {
+        // Fetch user data
+        const userResponse = await fetch(`/api/user/${phoneNumber}`, {
+          method: "GET",
+        });
+
+        if (!userResponse.ok) {
+          throw new Error(`Failed to fetch user data: ${userResponse.statusText}`);
+        }
+
+        const userData = await userResponse.json();
+        setUserData(userData);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchUserData();
+  }, [sessionData]);
 
   useEffect(() => {
     let result = allEvents;
@@ -204,7 +233,7 @@ const Dashboard = () => {
     return deg * (Math.PI / 180);
   };
 
-  const hobbies = ["Hiking", "Gardening", "Coding", "Reading"];
+  const hobbies = userData?.hobbies;
 
   return (
     <div className="min-h-screen bg-gray-50">

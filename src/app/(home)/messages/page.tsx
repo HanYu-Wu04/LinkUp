@@ -8,7 +8,7 @@ import { IEvent } from "@/database/eventSchema";
 
 export default function ChatPage() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
-  const [mockConversations, setMockConversations] = useState<ConversationInterface[]>(mockConv);
+  const [mockConversations, setMockConversations] = useState<ConversationInterface[]>([]);
   useEffect(() => {
     fetch("/api/events/registered").then((resp) => {
       if (resp.ok) {

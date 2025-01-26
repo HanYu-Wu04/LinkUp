@@ -11,6 +11,7 @@ export interface MessageInterface {
   id?: string;
   content: string;
   sender: string;
+  senderName: string;
   timestamp: string;
   type: string;
 }

@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { phoneNumber, password } = parsedCredentials.data;
 
         // Send login request to your API
-        const resp = await fetch("http://localhost:3000/api/user/signin", {
+        const resp = await fetch(`${process.env.HOST_URL}/api/user/signin`, {
           method: "POST",
           body: JSON.stringify({ phoneNumber, password }),
           headers: {

@@ -1,6 +1,7 @@
 "use client";
+
 import React, { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -25,7 +26,9 @@ const hobbies = [
 ];
 
 export default function HobbySurvey() {
-  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
+  const searchParams = useSearchParams();
+  const initialSelectedHobbies = JSON.parse(searchParams.get("selectedHobbies") || "[]");
+  const [selectedHobbies, setSelectedHobbies] = useState<string[]>(initialSelectedHobbies);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
@@ -56,7 +59,6 @@ export default function HobbySurvey() {
         if (response.ok) {
           router.push("/dashboard");
         } else {
-          // Handle error
           console.error("Failed to update hobbies");
         }
       } catch (error) {

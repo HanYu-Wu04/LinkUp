@@ -13,13 +13,20 @@ import { socket } from "@/socket";
 import { MessageInterface } from "./mock-data";
 import { useSession } from "next-auth/react";
 
-function handleSendMessage(e: MouseEvent<HTMLButtonElement>, message: string, userId: string, selectedId: string) {
+function handleSendMessage(
+  e: MouseEvent<HTMLButtonElement>,
+  message: string,
+  userId: string,
+  selectedId: string,
+  senderName: string,
+) {
   e.preventDefault();
   if (!message.trim() || !selectedId) return;
 
   const data: MessageInterface = {
     content: message,
     sender: userId,
+    senderName: senderName,
     type: "text",
     timestamp: new Date().toISOString(),
   };
@@ -59,6 +66,7 @@ export function ChatMain({ selectedId, className, eventName }: ChatMainProps) {
   const [message, setMessage] = useState("");
   const { data: sessionData, status } = useSession();
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [senderName, setSenderName] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (selectedId) {
@@ -77,6 +85,8 @@ export function ChatMain({ selectedId, className, eventName }: ChatMainProps) {
 
   useEffect(() => {
     if (status === "authenticated" && sessionData) {
+      console.log(sessionData.firstName);
+      setSenderName(sessionData.firstName);
       setUserId(sessionData.objectId);
     }
   }, [status, sessionData]);
@@ -102,7 +112,8 @@ export function ChatMain({ selectedId, className, eventName }: ChatMainProps) {
           <ScrollArea className="flex-1 p-4">
             <div className="space-y-4">
               {messages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.sender === userId ? "justify-end" : "justify-start"}`}>
+                <div key={idx} className={`flex flex-col ${msg.sender === userId ? "items-end" : "items-start"}`}>
+                  <p className="text-xs font-bold text-muted-foreground">{msg.senderName}</p>
                   <Card
                     className={`max-w-[70%] p-3 ${msg.sender === userId ? "bg-primary text-primary-foreground" : ""}`}
                   >
@@ -126,7 +137,7 @@ export function ChatMain({ selectedId, className, eventName }: ChatMainProps) {
               <Button
                 type="submit"
                 onClick={(e) => {
-                  handleSendMessage(e, message, userId || "", selectedId || "");
+                  handleSendMessage(e, message, userId || "", selectedId || "", senderName || "");
                   setMessage(""); // Clear input
                 }}
               >

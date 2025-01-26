@@ -45,8 +45,8 @@ const Nav = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => {
       className="fixed left-0 right-0 top-0 z-40 flex items-center justify-between px-4 py-2 transition-colors"
     >
       <div className="flex items-center gap-2 text-lg text-white">
-        <AiOutlineLink className="text-xl" />
-        <span className="font-bold">LinkUp</span>
+        <AiOutlineLink className="text-xl text-indigo-500" />
+        <span className="font-bold text-indigo-500">LinkUp</span>
       </div>
       <div className="flex justify-between gap-4">
         <Link
@@ -80,7 +80,8 @@ const Copy = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => 
       }}
       className="absolute z-20 flex h-screen w-full flex-col items-center justify-center px-8"
     >
-      <h1 className="max-w-xl text-center text-5xl font-bold text-stone-950 md:text-7xl">Link with your group now</h1>
+      <h1 className="max-w-xl text-center text-5xl font-bold text-indigo-500 md:text-7xl">Link Up </h1>
+      <h1 className="max-w-xl text-center text-5xl font-bold text-stone-950 md:text-7xl">with your group now</h1>
       <p className="my-6 max-w-xl text-center text-sm text-stone-600 md:text-base">
         Struggling to find people to do things with? No worries - we&apos;re here to link you up with like-minded
         people.
@@ -92,7 +93,7 @@ const Copy = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => 
           </button>
         </Link>
         <Link href="#">
-          <button className="bg-transparent px-4 py-2 font-medium text-stone-950 transition-colors hover:bg-stone-200">
+          <button className="bg-indigo-100 px-4 py-2 font-medium text-stone-950 transition-colors hover:bg-stone-200">
             Learn about us
           </button>
         </Link>
@@ -104,22 +105,22 @@ const Copy = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => 
 const Images = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => {
   const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
 
-  const image1Offset = useTransform(scrollYProgress, [0, 1], ["-35%", "0%"]);
+  const image1Offset = useTransform(scrollYProgress, [0, 1], ["-80%", "0%"]);
 
-  const image2OffsetX = useTransform(scrollYProgress, [0, 1], ["30%", "0%"]);
-  const image2OffsetY = useTransform(scrollYProgress, [0, 1], ["-30%", "0%"]);
+  const image2OffsetX = useTransform(scrollYProgress, [0, 1], ["80%", "0%"]);
+  const image2OffsetY = useTransform(scrollYProgress, [0, 1], ["-80%", "0%"]);
 
-  const image3OffsetX = useTransform(scrollYProgress, [0, 1], ["-25%", "0%"]);
-  const image3OffsetY = useTransform(scrollYProgress, [0, 1], ["25%", "0%"]);
+  const image3OffsetX = useTransform(scrollYProgress, [0, 1], ["-80%", "0%"]);
+  const image3OffsetY = useTransform(scrollYProgress, [0, 1], ["80%", "0%"]);
 
-  const image4OffsetX = useTransform(scrollYProgress, [0, 1], ["25%", "0%"]);
-  const image4OffsetY = useTransform(scrollYProgress, [0, 1], ["-145%", "0%"]);
+  const image4OffsetX = useTransform(scrollYProgress, [0, 1], ["70%", "0%"]);
+  const image4OffsetY = useTransform(scrollYProgress, [0, 1], ["-190%", "0%"]);
 
-  const image5OffsetX = useTransform(scrollYProgress, [0, 1], ["-25%", "0%"]);
-  const image5OffsetY = useTransform(scrollYProgress, [0, 1], ["25%", "0%"]);
+  const image5OffsetX = useTransform(scrollYProgress, [0, 1], ["-80%", "0%"]);
+  const image5OffsetY = useTransform(scrollYProgress, [0, 1], ["85%", "0%"]);
 
-  const image6OffsetX = useTransform(scrollYProgress, [0, 1], ["25%", "0%"]);
-  const image6OffsetY = useTransform(scrollYProgress, [0, 1], ["25%", "0%"]);
+  const image6OffsetX = useTransform(scrollYProgress, [0, 1], ["80%", "0%"]);
+  const image6OffsetY = useTransform(scrollYProgress, [0, 1], ["80%", "0%"]);
 
   return (
     <>

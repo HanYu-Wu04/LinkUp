@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import MapComponent from "./MapComponent";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eventSchema, type EventType } from "@/lib/zodEventSchema";
@@ -8,10 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useSession } from "next-auth/react";
+import { DateTimePicker } from "./ui/DateTimePicker";
 
 export function EventForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { status, data, update } = useSession();
+  data?.objectId;
   const form = useForm<EventType>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
@@ -24,12 +29,37 @@ export function EventForm() {
     },
   });
 
+  // Callback to sync marker position with the form
+  const handleMapMarkerChange = (lat: number, lng: number) => {
+    form.setValue("latitude", lat); // Update latitude field
+    form.setValue("longitude", lng); // Update longitude field
+  };
+
   async function onSubmit(data: EventType) {
     setIsSubmitting(true);
-    // Here you would typically send this data to your backend
-    console.log(data);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating API call
-    setIsSubmitting(false);
+
+    try {
+      const response = await fetch("/api/event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create event");
+      }
+
+      const result = await response.json();
+      console.log("Event created successfully:", result);
+
+      // Optionally reset the form or display a success message
+    } catch (error) {
+      console.error("Error submitting event:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -49,7 +79,16 @@ export function EventForm() {
             </FormItem>
           )}
         />
-
+        {/* Map Component */}
+        <div>
+          <MapComponent onMarkerChange={handleMapMarkerChange} /> {/* Pass callback to MapComponent */}
+        </div>
+        <div>
+          <FormItem>
+            <FormLabel>Date/Time</FormLabel>
+            <DateTimePicker />
+          </FormItem>
+        </div>
         <div className="flex space-x-4">
           <FormField
             control={form.control}

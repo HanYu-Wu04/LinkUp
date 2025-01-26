@@ -13,6 +13,18 @@ interface EventCardProps {
 const getParticipantCount = (event: IEvent) => {
   return event.participants.length + event.startingParticipants;
 };
+
+const onRegisterClick = async (isRegistered: boolean, eventId: string) => {
+  const body = { register: !isRegistered };
+
+  const res = await fetch(`/api/events/register/${eventId}`, { method: "POST", body: JSON.stringify(body) });
+  // TODO: add toast
+  if (!res.ok) {
+    console.error("Failed to register for event");
+  }
+  window.location.reload();
+};
+
 export const EventCard = ({ event, isRegistered }: EventCardProps) => {
   if (!event) return <></>;
   const { name, date, description } = event;
@@ -35,7 +47,13 @@ export const EventCard = ({ event, isRegistered }: EventCardProps) => {
           </span>
         </div>
         {/* <p className="mb-4 text-sm text-muted-foreground">{description}</p> */}
-        <Button variant={isRegistered ? "secondary" : "default"} className="button-hover w-full">
+        <Button
+          variant={isRegistered ? "secondary" : "default"}
+          onClick={() => {
+            onRegisterClick(isRegistered, event._id);
+          }}
+          className="button-hover w-full"
+        >
           {isRegistered ? "Linked" : "Link Up"}
         </Button>
       </CardContent>

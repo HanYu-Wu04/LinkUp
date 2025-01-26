@@ -134,7 +134,12 @@ export default function UserProfile() {
           </div>
           {/* Edit Hobbies */}
           <div className="mt-2 text-right">
-            <button className="text-blue-500 hover:underline" onClick={() => router.push("/survey")}>
+            <button
+              className="text-blue-500 hover:underline"
+              onClick={() =>
+                router.push(`/survey?selectedHobbies=${encodeURIComponent(JSON.stringify(userData?.hobbies || []))}`)
+              }
+            >
               Edit Hobby
             </button>
           </div>

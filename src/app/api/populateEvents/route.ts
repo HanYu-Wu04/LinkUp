@@ -164,7 +164,7 @@ interface EventData {
   date: Date;
   startingParticipants: number;
   capacity: number;
-  owner: mongoose.Types.ObjectId;
+  owner: String;
   location: string;
   description: string;
 }

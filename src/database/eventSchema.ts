@@ -15,7 +15,7 @@ export interface IEvent extends Document {
   name: string;
   description?: string;
   hobby?: string;
-  owner?: Schema.Types.ObjectId; // Reference to User model
+  owner?: String; // Reference to User model
   participants?: Schema.Types.ObjectId[]; // List of User references
   attendees?: Schema.Types.ObjectId[];
   messages?: MessageInterface[];
@@ -30,7 +30,7 @@ const EventSchema = new Schema<IEvent>({
   name: { type: String, required: true },
   description: { type: String, required: false },
   hobby: { type: String, required: false },
-  owner: { type: Schema.Types.ObjectId, ref: "User", required: false },
+  owner: { type: String, ref: "User", required: false },
   participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   startingParticipants: { type: Number },
   capacity: { type: Number },

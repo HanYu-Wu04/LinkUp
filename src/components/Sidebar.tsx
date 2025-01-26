@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Home, MessageSquare, User } from "lucide-react";
+import { Home, MessageSquare, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import DarkModeToggle from "./DarkModeToggle";
@@ -16,22 +16,18 @@ export const Sidebar = () => {
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80", // Default profile picture
   });
 
+  const phoneNumber = localStorage.getItem("phoneNumber");
+  const firstName = localStorage.getItem("firstName");
+  const lastName = localStorage.getItem("lastName");
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const phoneNumber = "user-phone-number"; // You can get this dynamically from session or context
-
-        const response = await fetch(`/api/user/userInfo/route.ts?reqPhoneNumber=${phoneNumber}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-
-        const data = await response.json();
-
         setUserData({
-          name: `${data.firstName} ${data.lastName}`,
-          phoneNumber: data.phoneNumber || "No Phone Number Provided",
-          profileImage: data.profileImage || "defaultImageURL", // Adjust as needed
+          name: `${firstName} ${lastName}`,
+          phoneNumber: phoneNumber || "No Phone Number Provided",
+          profileImage:
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80", // Adjust as needed
         });
       } catch (error) {
         console.error("Failed to fetch user data:", error);
@@ -45,6 +41,7 @@ export const Sidebar = () => {
     { icon: User, label: "View Profile", path: "/profile" },
     { icon: Home, label: "Home", path: "/dashboard" },
     { icon: MessageSquare, label: "Messages", path: "/messages" },
+    { icon: LogOut, label: "Log Out", path: "/" },
   ];
 
   return (

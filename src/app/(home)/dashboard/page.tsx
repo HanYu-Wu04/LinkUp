@@ -5,25 +5,25 @@ import { EventCard } from "@/components/EventCard";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
+import { IEvent } from "@/database/eventSchema";
 
 const Dashboard = () => {
   const [yourEvents, setYourEvents] = useState([]);
   const [recommendedEvents, setRecommendedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const session = useSession();
+  const { update, status, data } = useSession();
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
 
-        const response = await fetch("/api/events", {
+        const response = await fetch("/api/events/individual", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ phoneNumber: "user-phone-number" }), // Replace with actual user's phone number
         });
 
         if (!response.ok) {
@@ -31,7 +31,7 @@ const Dashboard = () => {
         }
 
         const data = await response.json();
-        setYourEvents(data.yourEvents || []);
+        setYourEvents(data);
         setRecommendedEvents(data.recommendedEvents || []);
       } catch (error) {
         toast({
@@ -60,8 +60,8 @@ const Dashboard = () => {
             <h2 className="text-3xl font-bold">Your Events</h2>
             {yourEvents.length > 0 ? (
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {yourEvents.map((event: any, index) => (
-                  <EventCard key={index} title={event.title} date={event.date} description={event.description} />
+                {yourEvents.map((event: IEvent, index) => (
+                  <EventCard key={index} event={event} isRegistered />
                 ))}
               </div>
             ) : (

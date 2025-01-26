@@ -1,0 +1,6 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import ShuffleHero from "@/components/landing/Hero";
+import LandingNav from "@/components/landing/LandingNav";
+import Testimonials from "@/components/landing/Testimonials";
+import Footer from "@/components/landing/Footer";

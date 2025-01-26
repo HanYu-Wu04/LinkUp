@@ -72,7 +72,7 @@ export default function Testimonials() {
 
   return (
     <div
-      className="relative w-full overflow-hidden bg-neutral-200"
+      className="relative w-full overflow-hidden bg-white"
       style={{
         height: SECTION_HEIGHT,
       }}
@@ -99,13 +99,13 @@ export default function Testimonials() {
       <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-8">
         <button
           onClick={() => handleMove(-1)}
-          className="grid h-14 w-14 place-content-center text-3xl transition-colors hover:bg-black hover:text-white"
+          className="grid h-14 w-14 place-content-center text-3xl text-black transition-colors hover:bg-black hover:text-white"
         >
           <GoArrowLeft />
         </button>
         <button
           onClick={() => handleMove(1)}
-          className="grid h-14 w-14 place-content-center text-3xl transition-colors hover:bg-black hover:text-white"
+          className="grid h-14 w-14 place-content-center text-3xl text-black transition-colors hover:bg-black hover:text-white"
         >
           <GoArrowRight />
         </button>
@@ -130,7 +130,7 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
       onClick={() => handleMove(position)}
       className={`
       absolute left-1/2 top-1/2 cursor-pointer border-black p-8 text-black transition-colors duration-500 ${
-        isActive ? "z-10 bg-indigo-600" : "z-0 bg-white"
+        isActive ? "z-10 bg-blue-200" : "z-0 bg-white"
       }
       `}
       style={{
@@ -169,12 +169,12 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
           boxShadow: "3px 3px 0px white",
         }}
       />
-      <h3 className={`text-base sm:text-xl ${isActive ? "text-white" : "text-black"}`}>
+      <h3 className={`text-base sm:text-xl ${isActive ? "text-blue-600" : "text-black"}`}>
         &apos;{testimonial.testimonial}&apos;
       </h3>
       <p
         className={`absolute bottom-8 left-8 right-8 mt-2 text-sm italic ${
-          isActive ? "text-indigo-200" : "text-neutral-700"
+          isActive ? "text-blue-600" : "text-neutral-700"
         }`}
       >
         - {testimonial.by}

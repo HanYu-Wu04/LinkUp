@@ -87,7 +87,7 @@ const NavLink = ({
           style={{
             transform: showFlyout ? "scaleX(1)" : "scaleX(0)",
           }}
-          className="absolute -bottom-2 -left-2 -right-2 h-1 origin-left scale-x-0 rounded-full bg-indigo-300 transition-transform duration-300 ease-out"
+          className="absolute -bottom-2 -left-2 -right-2 h-1 origin-left scale-x-0 rounded-full bg-blue-300 transition-transform duration-300 ease-out"
         />
       </a>
       <AnimatePresence>
@@ -120,7 +120,7 @@ const CTAs = () => {
         </button>
       </Link>
       <Link href="/signup">
-        <button className="rounded-lg border-2 border-indigo-300 bg-indigo-300 px-4 py-2 font-semibold text-black transition-colors hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
+        <button className="rounded-lg border-2 border-blue-300 bg-blue-300 px-4 py-2 font-semibold text-black transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white">
           Sign Up
         </button>
       </Link>
@@ -138,7 +138,7 @@ const AboutUsContent = () => {
             Placeholder is the world&apos;s leading placeholder company.
           </p>
         </div>
-        <a href="#" className="flex items-center gap-1 text-xs text-indigo-300 hover:underline">
+        <a href="#" className="flex items-center gap-1 text-xs text-blue-300 hover:underline">
           Learn more <FiArrowRight />
         </a>
       </div>
@@ -200,14 +200,14 @@ const PricingContent = () => {
 const CareersContent = () => {
   return (
     <div className="grid w-full grid-cols-12 shadow-xl lg:w-[750px]">
-      <div className="col-span-12 flex flex-col justify-between bg-indigo-600 p-6 lg:col-span-4">
+      <div className="col-span-12 flex flex-col justify-between bg-blue-600 p-6 lg:col-span-4">
         <div className="mb-6">
           <h2 className="mb-2 text-xl font-semibold text-white">Careers</h2>
-          <p className="text-sm text-indigo-100">
+          <p className="text-sm text-blue-100">
             Join our team of talented individuals to help link the world together.
           </p>
         </div>
-        <a href="#" className="flex items-center gap-1 text-xs text-indigo-200 hover:underline">
+        <a href="#" className="flex items-center gap-1 text-xs text-blue-200 hover:underline">
           Careers site <FiArrowRight />
         </a>
       </div>

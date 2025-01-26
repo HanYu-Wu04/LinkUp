@@ -45,13 +45,13 @@ const Nav = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => {
       className="fixed left-0 right-0 top-0 z-40 flex items-center justify-between px-4 py-2 transition-colors"
     >
       <div className="flex items-center gap-2 text-lg text-white">
-        <AiOutlineLink className="text-xl text-indigo-500" />
-        <span className="font-bold text-indigo-500">LinkUp</span>
+        <AiOutlineLink className="text-xl text-blue-500" />
+        <span className="font-bold text-blue-500">LinkUp</span>
       </div>
       <div className="flex justify-between gap-4">
         <Link
           href="/login"
-          className="flex items-center gap-1.5 bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-black text-white transition-opacity hover:opacity-90"
+          className="flex items-center gap-1.5 bg-blue-500 px-3 py-1.5 text-sm font-semibold text-black text-white transition-opacity hover:opacity-90"
         >
           <span>Login</span>
         </Link>
@@ -80,7 +80,7 @@ const Copy = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => 
       }}
       className="absolute z-20 flex h-screen w-full flex-col items-center justify-center px-8"
     >
-      <h1 className="max-w-xl text-center text-5xl font-bold text-indigo-500 md:text-7xl">Link Up </h1>
+      <h1 className="max-w-xl text-center text-5xl font-bold text-blue-500 md:text-7xl">Link Up </h1>
       <h1 className="max-w-xl text-center text-5xl font-bold text-stone-950 md:text-7xl">with your group now</h1>
       <p className="my-6 max-w-xl text-center text-sm text-stone-600 md:text-base">
         Struggling to find people to do things with? No worries - we&apos;re here to link you up with like-minded
@@ -88,12 +88,12 @@ const Copy = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => 
       </p>
       <div className="flex items-center gap-4">
         <Link href="/signup">
-          <button className="bg-indigo-500 px-4 py-2 font-medium text-white transition-colors hover:bg-violet-600">
+          <button className="bg-blue-500 px-4 py-2 font-medium text-white transition-colors hover:bg-violet-600">
             Join Today
           </button>
         </Link>
         <Link href="#">
-          <button className="bg-indigo-100 px-4 py-2 font-medium text-stone-950 transition-colors hover:bg-stone-200">
+          <button className="bg-blue-100 px-4 py-2 font-medium text-stone-950 transition-colors hover:bg-stone-200">
             Learn about us
           </button>
         </Link>

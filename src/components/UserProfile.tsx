@@ -6,7 +6,7 @@ import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 export default function UserProfile() {
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
   const [profileImage, setProfileImage] = useState("");
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,6 +14,7 @@ export default function UserProfile() {
 
   // Fetch user data by phone number
   useEffect(() => {
+    if (status === "loading") return;
     const fetchUserData = async () => {
       const phoneNumber = sessionData?.phoneNumber || localStorage.getItem("phoneNumber");
 
@@ -70,60 +71,58 @@ export default function UserProfile() {
 
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.formContainer}>
-        {/* Main Content */}
-        <div className={styles.mainContent}>
-          {/* Profile Image */}
-          <div className={styles.profileImageContainer}>
-            <img
-              src={
-                profileImage ||
-                "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-              }
-              alt="Profile"
-              className={styles.profileImage}
-            />
-            <label htmlFor="imageUpload" className={styles.uploadButton}>
-              <Camera size={16} />
-            </label>
-            <input
-              id="imageUpload"
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{ display: "none" }}
-            />
+      {/* Main Content */}
+      <div className={styles.mainContent}>
+        {/* Profile Image */}
+        <div className={styles.profileImageContainer}>
+          <img
+            src={
+              profileImage ||
+              "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+            }
+            alt="Profile"
+            className={styles.profileImage}
+          />
+          <label htmlFor="imageUpload" className={styles.uploadButton}>
+            <Camera size={16} />
+          </label>
+          <input
+            id="imageUpload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+          />
+        </div>
+        <div className={styles.highlight}>
+          <h2 className={styles.containerTitle}>Profile Details</h2>
+        </div>
+        <div className={styles.formFields}>
+          <div className={styles.leftColumn}>
+            <div>
+              <div className={styles.fieldTitle}>First Name</div>
+              <div className={styles.fieldValue}>{userData?.firstName || "N/A"}</div>
+            </div>
+            <div>
+              <div className={styles.fieldTitle}>Last Name</div>
+              <div className={styles.fieldValue}>{userData?.lastName || "N/A"}</div>
+            </div>
+            <div>
+              <div className={styles.fieldTitle}>Phone Number</div>
+              <div className={styles.fieldValue}>{userData?.phoneNumber || "N/A"}</div>
+            </div>
           </div>
-          <div className={styles.highlight}>
-            <h2 className={styles.containerTitle}>Profile Details</h2>
-          </div>
-          <div className={styles.formFields}>
-            <div className={styles.leftColumn}>
-              <div>
-                <div className={styles.fieldTitle}>First Name</div>
-                <div className={styles.fieldValue}>{userData?.firstName || "N/A"}</div>
-              </div>
-              <div>
-                <div className={styles.fieldTitle}>Last Name</div>
-                <div className={styles.fieldValue}>{userData?.lastName || "N/A"}</div>
-              </div>
-              <div>
-                <div className={styles.fieldTitle}>Phone Number</div>
-                <div className={styles.fieldValue}>{userData?.phoneNumber || "N/A"}</div>
+          <div className={styles.rightColumn}>
+            <div>
+              <div className={styles.fieldTitle}>Hobbies</div>
+              <div className={styles.fieldValue}>
+                {userData?.hobbies?.length > 0 ? userData.hobbies.join(", ") : "No hobbies yet"}
               </div>
             </div>
-            <div className={styles.rightColumn}>
-              <div>
-                <div className={styles.fieldTitle}>Hobbies</div>
-                <div className={styles.fieldValue}>
-                  {userData?.hobbies?.length > 0 ? userData.hobbies.join(", ") : "No hobbies yet"}
-                </div>
-              </div>
-              <div>
-                <div className={styles.fieldTitle}>Events</div>
-                <div className={styles.fieldValue}>
-                  {userData?.events?.length > 0 ? userData.events.join(", ") : "No events yet"}
-                </div>
+            <div>
+              <div className={styles.fieldTitle}>Events</div>
+              <div className={styles.fieldValue}>
+                {userData?.events?.length > 0 ? userData.events.join(", ") : "No events yet"}
               </div>
             </div>
           </div>

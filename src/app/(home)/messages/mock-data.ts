@@ -1,3 +1,12 @@
+export interface ConversationInterface {
+  id: string;
+  name: string;
+  avatar: string;
+  lastMessage: string;
+  timestamp: string;
+  online: boolean;
+}
+
 export const mockConversations = [
   {
     id: "1",

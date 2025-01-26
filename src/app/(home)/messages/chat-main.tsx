@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -7,6 +8,7 @@ import { Mic, Paperclip, Send, Smile } from "lucide-react";
 import Image from "next/image";
 import { mockConversations, mockMessages } from "./mock-data";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface ChatMainProps {
   selectedId: string | null;

@@ -6,9 +6,11 @@ import { cn } from "@/lib/utils";
 import DarkModeToggle from "./DarkModeToggle";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export const Sidebar = () => {
   const pathname = usePathname();
+  const { data, status } = useSession();
   const [userData, setUserData] = useState({
     name: "Loading...",
     phoneNumber: "Loading...",
@@ -16,17 +18,17 @@ export const Sidebar = () => {
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80", // Default profile picture
   });
 
-  const phoneNumber = localStorage.getItem("phoneNumber");
-  const firstName = localStorage.getItem("firstName");
-  const lastName = localStorage.getItem("lastName");
   const picture = localStorage.getItem("profilePic");
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (status === "loading") return;
+
+      if (!data) return;
       try {
         setUserData({
-          name: `${firstName} ${lastName}`,
-          phoneNumber: phoneNumber || "No Phone Number Provided",
+          name: `${data.firstName} ${data.lastName}`,
+          phoneNumber: data.phoneNumber || "No Phone Number Provided",
           profileImage:
             picture ||
             "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg", // Adjust as needed
@@ -37,7 +39,7 @@ export const Sidebar = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [status]);
 
   const links = [
     { icon: Home, label: "Home", path: "/dashboard" },
@@ -77,9 +79,9 @@ export const Sidebar = () => {
           </Link>
         ))}
       </nav>
-      <div className="mt-auto">
+      {/* <div className="mt-auto">
         <DarkModeToggle />
-      </div>
+      </div> */}
     </div>
   );
 };

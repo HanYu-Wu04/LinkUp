@@ -65,7 +65,11 @@ export default function Signup() {
     localStorage.setItem("password", data.password);
     localStorage.setItem("firstName", data.firstName);
     localStorage.setItem("lastName", data.lastName);
-    router.push("/survey");
+    localStorage.setItem(
+      "profilePic",
+      "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg",
+    );
+    router.push("/login");
 
     const response = await fetch("/api/user/signup", {
       method: "POST",

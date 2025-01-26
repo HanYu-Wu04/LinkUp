@@ -5,6 +5,6 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
-    domains: ["images.unsplash.com"], // Allow images from Unsplash
+    domains: ["images.unsplash.com", "static.vecteezy.com"], // Allow images from Unsplash
   },
 };

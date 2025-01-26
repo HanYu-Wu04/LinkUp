@@ -19,6 +19,7 @@ export const Sidebar = () => {
   const phoneNumber = localStorage.getItem("phoneNumber");
   const firstName = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
+  const picture = localStorage.getItem("profilePic");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,7 +28,8 @@ export const Sidebar = () => {
           name: `${firstName} ${lastName}`,
           phoneNumber: phoneNumber || "No Phone Number Provided",
           profileImage:
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80", // Adjust as needed
+            picture ||
+            "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg", // Adjust as needed
         });
       } catch (error) {
         console.error("Failed to fetch user data:", error);

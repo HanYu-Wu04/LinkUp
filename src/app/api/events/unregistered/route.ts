@@ -17,9 +17,7 @@ export async function GET() {
   // TODO: fix to utilize mongoodb queries
   const allEvents = await Event.find({});
   console.log("All events", allEvents);
-  const events = allEvents.filter(
-    (event) => event.date >= currentDate && !event.participants.includes(session.objectId),
-  );
+  const events = allEvents.filter((event) => !event.participants.includes(session.objectId));
   console.log(events, session.objectId);
   // TODO: utilize mongodb query to filter events that are not yet over
   //   const userEvents = await User.findOne({ phoneNumber })

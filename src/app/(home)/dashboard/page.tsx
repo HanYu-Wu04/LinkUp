@@ -75,6 +75,7 @@ const Dashboard = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log("Set user", position.coords);
           setUserLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,

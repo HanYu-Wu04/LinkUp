@@ -16,7 +16,8 @@ export async function GET() {
   console.log(currentDate);
   const allEvents = await User.findOne({ phoneNumber }).populate("events").exec();
   console.log(allEvents.events);
-  const events = allEvents.events.filter((event) => event.date >= currentDate);
+  const events = allEvents.events;
+  //   const events = allEvents.events.filter((event) => event.date >= currentDate);
   // TODO: utilize mongodb query to filter events that are not yet over
   //   const userEvents = await User.findOne({ phoneNumber })
   //     .populate({ path: "events", match: { date: { $lte: currentDate } } })

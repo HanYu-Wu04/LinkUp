@@ -6,6 +6,7 @@ const valid_paths = [
   "/login",
   "/signup",
   "/messages",
+  "/event",
   "/api/user/signup",
   "/api/user/signin",
   "/api/user/signout",

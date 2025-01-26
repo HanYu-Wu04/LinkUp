@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import connectDB from "@/database/db";
 import Event from "@/database/eventSchema";
 import { auth } from "@/auth";
-import User from "@/database/userSchema";
 
 export async function GET() {
   await connectDB();
@@ -15,14 +14,16 @@ export async function GET() {
   // Filter by events that are not yet over
   const currentDate = new Date();
   console.log(currentDate);
-  const allEvents = await User.findOne({ phoneNumber }).populate({ path: "events" }).exec();
-  console.log(allEvents.events);
-  const events = allEvents.events.filter((event) => event.date >= currentDate);
+  // TODO: fix to utilize mongoodb queries
+  const allEvents = await Event.find({});
+  const events = allEvents.filter(
+    (event) => event.date >= currentDate && !event.participants.includes(session.objectId),
+  );
+  console.log(events, session.objectId);
   // TODO: utilize mongodb query to filter events that are not yet over
   //   const userEvents = await User.findOne({ phoneNumber })
   //     .populate({ path: "events", match: { date: { $lte: currentDate } } })
   //     .exec();
-  console.log(events);
   return NextResponse.json(events);
 }
 

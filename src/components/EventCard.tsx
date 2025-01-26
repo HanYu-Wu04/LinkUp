@@ -17,7 +17,7 @@ export const EventCard = ({ event, isRegistered }: EventCardProps) => {
   if (!event) return <></>;
   const { name, date, description } = event;
   return (
-    <Card className="glass-card min-w-[500px] overflow-hidden transition-all duration-300 hover:shadow-xl">
+    <Card className="glass-card overflow-hidden transition-all duration-300 hover:shadow-xl">
       <CardHeader className="space-y-1">
         <div className="flex items-center space-x-2">
           <Calendar className="h-4 w-4 text-muted-foreground" />

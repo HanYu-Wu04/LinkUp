@@ -6,7 +6,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <div className="max-lg:hidden">
         <Sidebar />
       </div>
-      <div className="flex">{children}</div>
+      <div className="flex p-8">{children}</div>
     </div>
   );
 }

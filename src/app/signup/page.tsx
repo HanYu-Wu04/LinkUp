@@ -133,7 +133,7 @@ export default function Signup() {
         </form>
         <Text textAlign="center" mt={4} color="gray.600">
           Already have an account?{" "}
-          <Link as={NextLink} href="/login" color="blue.500" textDecoration="underline">
+          <Link as={NextLink} href="/login" color="blue.500" className="hover:underline">
             Log In
           </Link>
         </Text>

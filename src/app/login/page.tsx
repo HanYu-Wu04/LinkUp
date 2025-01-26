@@ -5,10 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  Text,
+  Heading,
+  Link,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
 
 // Define Zod schema
 const signInSchema = z.object({
@@ -34,7 +43,6 @@ const Login = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignIn = async (data: SignInFormData) => {
@@ -42,82 +50,62 @@ const Login = () => {
 
     const response = await fetch("/api/user/signin", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
       setError("apiError", { type: "manual", message: errorData.error });
-      toast({ title: "Error", description: errorData.error, variant: "destructive" });
       setIsSubmitting(false);
-    } else {
-      toast({ title: "Welcome Back!", description: "Redirecting to dashboard..." });
-      await signIn("credentials", {
-        redirect: true,
-        redirectTo: "/dashboard",
-        phoneNumber: data.phoneNumber,
-        password: data.password,
-      });
+      return;
     }
+    await signIn("credentials", {
+      redirect: true,
+      redirectTo: "/dashboard",
+      phoneNumber: data.phoneNumber,
+      password: data.password,
+    });
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white to-gray-50 p-6">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold">Welcome Back</h2>
-          <p className="mt-2 text-muted-foreground">Sign in to your account to continue</p>
-        </div>
+      <Box bg="white" p={8} rounded="lg" shadow="2xl" width="full" maxW="md" border="1px solid" borderColor="gray.200">
+        <Heading as="h1" size="lg" textAlign="center" mb={6}>
+          Welcome Back
+        </Heading>
+        <Text textAlign="center" mb={4} color="gray.600">
+          Sign in to your account to continue
+        </Text>
+        <form onSubmit={handleSubmit(handleSignIn)}>
+          <FormControl isInvalid={!!errors.phoneNumber} mb={4}>
+            <FormLabel>Phone Number</FormLabel>
+            <Input type="tel" {...register("phoneNumber")} placeholder="Enter your phone number" maxLength={10} />
+            <FormErrorMessage>{errors.phoneNumber?.message}</FormErrorMessage>
+          </FormControl>
 
-        <form onSubmit={handleSubmit(handleSignIn)} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="phoneNumber">
-              Phone Number
-            </label>
-            <Input
-              id="phoneNumber"
-              type="tel"
-              {...register("phoneNumber")}
-              placeholder="Enter your phone number"
-              maxLength={10}
-              required
-              className="w-full"
-            />
-            {errors.phoneNumber && <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>}
-          </div>
+          <FormControl isInvalid={!!errors.password} mb={4}>
+            <FormLabel>Password</FormLabel>
+            <Input type="password" {...register("password")} placeholder="Enter your password" />
+            <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+          </FormControl>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="password">
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              {...register("password")}
-              placeholder="Enter your password"
-              required
-              className="w-full"
-            />
-            {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
-          </div>
-
-          {errors.apiError && <p className="text-sm text-red-500">{errors.apiError.message}</p>}
-
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Signing In..." : "Sign In"}
+          {errors.apiError && (
+            <Text color="red.500" fontSize="sm" mt={1}>
+              {errors.apiError.message}
+            </Text>
+          )}
+          <Button type="submit" colorScheme="blue" width="full" mt={4} isLoading={isSubmitting}>
+            Sign In
           </Button>
         </form>
-
-        <p className="text-center text-sm text-muted-foreground">
+        <Text textAlign="center" mt={4} color="gray.600">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-primary hover:underline">
-            Sign up
+          <Link as={NextLink} href="/signup" color="blue.500" className="hover:underline">
+            Sign Up
           </Link>
-        </p>
-      </div>
+        </Text>
+      </Box>
     </div>
   );
 };
